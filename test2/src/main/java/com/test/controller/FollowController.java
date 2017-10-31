@@ -24,25 +24,8 @@ import com.test.service.SearchService;
 @RequestMapping("/follow/*")
 public class FollowController {
 	@Inject
-	private SearchService searchservice;
-	@Inject
 	private FollowService service;
-
-	/*@RequestMapping(value = "/followlist", method = RequestMethod.GET)
-	public String Followget(String userid, String followid, FollowVO vo, Model model, HttpServletRequest request)
-			throws Exception {
-		String id = (String) request.getSession().getAttribute("login");
-		model.addAttribute("followercount",service.followercount(id));
-		model.addAttribute("followingcount",service.followingcount(id));
-		String referer = request.getHeader("Referer");
-		if (id != null) {
-			model.addAttribute("followlist", service.listSearchCriteria(vo));
-			return "redirect:" + referer;
-		} else {
-			return "redirect:../klogin/login";
-		}
-	}*/
-
+	
 	@RequestMapping(value = "/insertFollow", method = RequestMethod.GET)
 	public String insertFollow(String userid, String followid, ScrollBoardVO vo, Model model,
 			HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -72,6 +55,16 @@ public class FollowController {
 		}
 
 	}
+	@RequestMapping(value = "/delete", method = RequestMethod.GET)
+	public String remove(String userid, String followid,HttpServletRequest request, RedirectAttributes rttr)throws Exception {
+		Map<String, String> map1 = new HashMap<String, String>();
+		map1.put("userid", userid);
+		map1.put("followid", followid);
+		String referer = request.getHeader("Referer");
+		service.delete(map1);
+		return "redirect:" + referer;
+	}
+/*
 	@RequestMapping(value = "/insertComFollow", method = RequestMethod.GET)
 	public String insertComFollow(String userid, String followcode, ScrollBoardVO vo, Model model,
 			HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -104,15 +97,6 @@ public class FollowController {
 		}
 
 	}
-	@RequestMapping(value = "/delete", method = RequestMethod.GET)
-	public String remove(String userid, String followid,HttpServletRequest request, RedirectAttributes rttr)throws Exception {
-		Map<String, String> map1 = new HashMap<String, String>();
-		map1.put("userid", userid);
-		map1.put("followid", followid);
-		String referer = request.getHeader("Referer");
-		service.delete(map1);
-		return "redirect:" + referer;
-	}
 	@RequestMapping(value = "/deleteCom", method = RequestMethod.GET)
 	public String removeCom(String userid, String followcode,HttpServletRequest request, RedirectAttributes rttr)throws Exception {
 		Map<String, String> map1 = new HashMap<String, String>();
@@ -121,5 +105,5 @@ public class FollowController {
 		String referer = request.getHeader("Referer");
 		service.deleteCom(map1);
 		return "redirect:" + referer;
-	}
+	}*/
 }

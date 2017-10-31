@@ -127,10 +127,10 @@
 		</form>
 		<ul id="icon">
 			<li class="icon1"><a
-				href="../member/individual?keyword=${sessionScope.login}">
-					<div class="cover"></div> <img src="../resources/images/icon1.png"
-					alt="개인페이지" /> <c:if test="${fn:length(updatenewpost) ne 0}">new</c:if>
-			</a></li>
+					href="../cboard/news?userid=${sessionScope.login}"><div
+							class="cover"></div> <img src="../resources/images/icon1.png"
+						alt="개인페이지" />
+				</a></li>
 			<li class="icon2"><a
 				href="../cboard/companylist?userid=${sessionScope.login}"><div
 						class="cover"></div> <img src="../resources/images/icon2.png"
@@ -197,18 +197,18 @@
 							<li>
 								<div>
 									<div class="search_img" style='cursor: pointer;'
-										onclick="goproduct('${product.companyCode}');"  style="width:20%">
+										onclick="goproduct('${product.userid}');"  style="width:20%">
 										<img src="../resources/img/${product.image}" />
 										<input type="hidden" id="pid" value="${product.pid}">
 									</div>
 									<div class="search_info"  style="width:73%;">
 										<div class="search_info_name">
 											<span class="k_name" style='cursor: pointer;'
-												onclick="goproduct('${product.companyCode}');">${product.product}(${product.product_en})</span>
+												onclick="goproduct('${product.userid}');">${product.product}(${product.product_en})</span>
 										</div>
 										<div class="search_info_name">
 											<span class="k_name" style='cursor: pointer;'
-												onclick="goproduct('${product.companyCode}');">${product.pinfo}</span>
+												onclick="goproduct('${product.userid}');">${product.pinfo}</span>
 										</div>
 									</div>
 								</div>

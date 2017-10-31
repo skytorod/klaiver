@@ -112,9 +112,11 @@
 			src="../resources/images/search_btn.png" alt="검색" />
 	</form>
 	<ul id="icon">
-		<li class="icon1"><a href="../member/individual?keyword=${sessionScope.login}"><div class="cover"></div><img src="../resources/images/icon1.png" alt="개인페이지"/>
-           <c:if test="${fn:length(updatenewpost) ne 0}">new</c:if>
-           </a></li>
+		<li class="icon1"><a
+					href="../cboard/news?userid=${sessionScope.login}"><div
+							class="cover"></div> <img src="../resources/images/icon1.png"
+						alt="개인페이지" />
+				</a></li>
 		<li class="icon2"><a
 				href="../cboard/companylist?userid=${sessionScope.login}"><div
 						class="cover"></div> <img src="../resources/images/icon2.png"
@@ -190,18 +192,11 @@
 									<div class="search_info">
 										<div class="search_info_name">
 											<span class="k_name" style='cursor: pointer;'
-												onclick="gosolo('${IndividualVO.email}');">${IndividualVO.first}${IndividualVO.last}</span>
+												onclick="gosolo('${IndividualVO.email}');">${IndividualVO.username}</span>
 										</div>
 										<div class="search_info_name">
 											<span class="k_name" style='cursor: pointer;'
 												onclick="gosolo('${IndividualVO.email}');">${IndividualVO.email}</span>
-											|<span class="k_name" style='cursor: pointer;'
-												onclick="gosolo('${IndividualVO.email}');">${IndividualVO.company}</span>
-											| <span class="e_name">${IndividualVO.industry}</span>
-										</div>
-										<div class="search_info_add">
-											<span class=" business_type">${IndividualVO.city}</span> | <span
-												class="city">${IndividualVO.country}</span>
 										</div>
 
 									</div>
@@ -220,15 +215,11 @@
 									<div class="search_info">
 										<div class="search_info_name">
 											<span class="k_name" style='cursor: pointer;'
-												onclick="gosolo('${IndividualVO.email}');">${IndividualVO.first}${IndividualVO.last}</span>
+												onclick="gosolo('${IndividualVO.email}');">${IndividualVO.username}</span>
 										</div>
 										<div class="search_info_name">
 											<span class="k_name" style='cursor: pointer;'
 												onclick="gosolo('${IndividualVO.email}');">${IndividualVO.email}</span>
-											| <span class="k_name" style='cursor: pointer;'
-												onclick="gosolo('${IndividualVO.email}');">${IndividualVO.company}</span>
-											| <span class="e_name" style='cursor: pointer;'
-												onclick="gosolo('${IndividualVO.email}');">${IndividualVO.industry}</span>
 											<c:if test="${IndividualVO.flag eq true}">
 												<span class="follow_btn"><a
 													href="../follow/delete?userid=${sessionScope.login}&followid=${IndividualVO.email}">Following</a></span>
@@ -237,12 +228,6 @@
 												<span class="follow_btn"><a
 													href="../follow/insertFollow?userid=${sessionScope.login}&followid=${IndividualVO.email}">Follow</a></span>
 											</c:if>
-										</div>
-										<div class="search_info_add">
-											<span class=" business_type" style='cursor: pointer;'
-												onclick="gosolo('${IndividualVO.email}');">${IndividualVO.city}</span>
-											| <span class="city" style='cursor: pointer;'
-												onclick="gosolo('${IndividualVO.email}');">${IndividualVO.country}</span>
 										</div>
 
 									</div>

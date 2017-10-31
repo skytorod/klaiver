@@ -5,7 +5,7 @@ public class K_contactVO {
 	private String userid;
 	private String phonenumber;
 	private String fax;
-	private String email;
+	private String cemail;
 	private String address;
 	private String organizationChart;
 	private int pid;
@@ -36,11 +36,12 @@ public class K_contactVO {
 	public void setFax(String fax) {
 		this.fax = fax;
 	}
-	public String getEmail() {
-		return email;
+	
+	public String getCemail() {
+		return cemail;
 	}
-	public void setEmail(String email) {
-		this.email = email;
+	public void setCemail(String cemail) {
+		this.cemail = cemail;
 	}
 	public String getAddress() {
 		return address;

@@ -147,10 +147,11 @@ $(document).ready(function () {
             <input type="image" id="search_btn" src="../resources/images/search_btn.png" alt="검색"/>
         </form>
         <ul id="icon">
-        <li class="icon1"><a href="../member/individual?keyword=${sessionScope.login}">
-			<div class="cover"></div><img src="../resources/images/icon1.png" alt="개인페이지"/>
-           <c:if test="${fn:length(updatenewpost) ne 0}">new</c:if>
-           </a></li>
+       <li class="icon1"><a
+					href="../cboard/news?userid=${sessionScope.login}"><div
+							class="cover"></div> <img src="../resources/images/icon1.png"
+						alt="개인페이지" />
+				</a></li>
            <li class="icon2"><a
 				href="../cboard/companylist?userid=${sessionScope.login}"><div
 						class="cover"></div> <img src="../resources/images/icon2.png"
@@ -184,10 +185,10 @@ $(document).ready(function () {
 								src="../resources/images/set.png" /></a>
 						</div>
 						<ul id="page_move">
-							<li class="on"><a href="news?userid=${IndividualVO.email}">Home</a></li>
+							<li><a href="news?userid=${IndividualVO.email}">Home</a></li>
 							<li><a href="check_about?userid=${IndividualVO.email}">About</a></li>
 							<li><a href="readPage_product?userid=${IndividualVO.email}">Product</a></li>
-							<li><a href="check_contact?userid=${IndividualVO.email}">Contact</a></li>
+							<li class="on"><a href="check_contact?userid=${IndividualVO.email}">Contact</a></li>
 						</ul>
 					</c:forEach>
 				</div>
@@ -227,7 +228,7 @@ $(document).ready(function () {
                     </div>
                     <div class="array">
                         <span>Email</span>
-                        <input class="info_enter" type="text" id="input23" name="email" value="${k_contactVO.email}"/>
+                        <input class="info_enter" type="text" id="input23" name="cemail" value="${k_contactVO.cemail}"/>
                     </div>
                     <div class="array">
                         <span>주소</span>

@@ -17,36 +17,16 @@ public class FollowDAOImpl implements FollowDAO {
 
 	private static final String namespace = "com.test.mapper.FollowMapper";
 
-	@Override
-	public void insertfollow(Map<String, String> map) throws Exception {
-		// TODO Auto-generated method stub
-		sqlSession.insert(namespace +".insertfollow",map);
-	}
+	
 	
 	@Override
 	public List<FollowVO> listSearchCriteriaCompany(Map<String, String> map) throws Exception {
 		
 		return sqlSession.selectList(namespace+".listSearchCriteriaCompany",map);
 	}
+	
 
-	@Override
-	public List<FollowVO> listSearchsearch(String id) throws Exception {
-		// TODO Auto-generated method stub
-		return sqlSession.selectList(namespace+".listSearchsearch",id);
-	}
-
-	@Override
-	public List<FollowVO>  getid(String id) throws Exception {
-		// TODO Auto-generated method stub
-		return sqlSession.selectList(namespace+".getid",id);
-	}
-
-	@Override
-	public void delete(Map<String, String> map1) throws Exception {
-		// TODO Auto-generated method stub
-		System.out.println(map1);
-		sqlSession.delete(namespace+".delete",map1);
-	}
+	
 
 	@Override
 	public int followercount(String id) throws Exception {
@@ -171,4 +151,25 @@ public class FollowDAOImpl implements FollowDAO {
 		sqlSession.update(namespace+".flasenewpost",map);
 	}
 
+	///////////////////////////////////////////////////////////////////////////
+	@Override
+	public List<FollowVO> listSearchsearch(String id) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList(namespace+".listSearchsearch",id);
+	}
+	@Override
+	public List<FollowVO>  getid(String id) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList(namespace+".getid",id);
+	}
+	@Override
+	public void insertfollow(Map<String, String> map) throws Exception {
+		// TODO Auto-generated method stub
+		sqlSession.insert(namespace +".insertfollow",map);
+	}
+	@Override
+	public void delete(Map<String, String> map1) throws Exception {
+		// TODO Auto-generated method stub
+		sqlSession.delete(namespace+".delete",map1);
+	}
 }

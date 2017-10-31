@@ -77,10 +77,11 @@
             <input type="image" id="search_btn" src="../resources/images/search_btn.png" alt="검색"/>
         </form>
         <ul id="icon">
-        <li class="icon1"><a href="../member/individual?keyword=${sessionScope.login}">
-			<div class="cover"></div><img src="../resources/images/icon1.png" alt="개인페이지"/>
-           <c:if test="${fn:length(updatenewpost) ne 0}">new</c:if>
-           </a></li>
+        <li class="icon1"><a
+					href="../cboard/news?userid=${sessionScope.login}"><div
+							class="cover"></div> <img src="../resources/images/icon1.png"
+						alt="개인페이지" />
+				</a></li>
            <li class="icon2"><a
 				href="../cboard/companylist?userid=${sessionScope.login}"><div
 						class="cover"></div> <img src="../resources/images/icon2.png"

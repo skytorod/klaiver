@@ -7,15 +7,15 @@ import com.test.domain.FollowVO;
 
 public interface FollowDAO {
 
-	public void insertfollow(Map<String, String> map) throws Exception;
+	
 	
 	public List<FollowVO> listSearchCriteriaCompany(Map<String, String> map)throws Exception;
 
-	public List<FollowVO> listSearchsearch(String id) throws Exception;
 
-	public List<FollowVO> getid(String id)throws Exception;
 
-	public void delete(Map<String, String> map1) throws Exception;
+	
+
+	
 
 	public int followercount(String id) throws Exception;
 
@@ -59,7 +59,12 @@ public interface FollowDAO {
 
 	public void flasenewpost(Map<String, String> map)  throws Exception;
 
-
+	///////////////////////////////////////////////////////////////////
+	public List<FollowVO> listSearchsearch(String id) throws Exception;
 	
+	public List<FollowVO> getid(String id)throws Exception;
 	
+	public void insertfollow(Map<String, String> map) throws Exception;
+	
+	public void delete(Map<String, String> map1) throws Exception;
 }

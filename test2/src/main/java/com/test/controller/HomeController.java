@@ -39,9 +39,9 @@ public class HomeController {
 	@Inject
 	private ScrollBoardService servicescroll;
 	@Inject
-	private CategoryService service3;
+	private CategoryService serviceCate;
 	@Inject
-	private FollowService service4;
+	private FollowService serviceFollow;
 	@Inject
 	private CboardService servicecompany;
 	@Inject
@@ -117,11 +117,11 @@ public class HomeController {
 	public String loginhome(CategoryVO vo, Locale locale, HttpServletRequest request, Model model, HttpSession session)
 			throws Exception {
 		String id = (String) request.getSession().getAttribute("login");
-		/*model.addAttribute("list", service3.categoryget(vo));
-		model.addAttribute("followlist", service4.listSearchCriteriasearch(id));
-		Map<String, String> map = new HashMap<String, String>();
+		model.addAttribute("list", serviceCate.categoryget(vo));
+		model.addAttribute("followlist", serviceFollow.listSearchCriteriasearch(id));
+		/*Map<String, String> map = new HashMap<String, String>();
 		map.put("userid", id);
-		model.addAttribute("followcompanylist", service4.listSearchCriteriaCompany(map));
+		model.addAttribute("followcompanylist", serviceFollow.listSearchCriteriaCompany(map));
 		model.addAttribute("updatenewpost", servicescroll.updatenewpost(id));
 		model.addAttribute("mlist", admin.getlist());*/
 		return "/home";
@@ -131,7 +131,7 @@ public class HomeController {
 	@ResponseBody
 	public List<CategoryVO> categoryget(@PathVariable("mc_number") Integer mc_number) throws Exception {
 
-		return service3.smallcate(mc_number);
+		return serviceCate.smallcate(mc_number);
 	}
 	@RequestMapping(value = "/companylist", method = RequestMethod.GET)
 	public void companylist(@ModelAttribute("cri") SearchCriteria cri,Model model) throws Exception{
