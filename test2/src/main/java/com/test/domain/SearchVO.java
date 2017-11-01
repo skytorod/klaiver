@@ -1,15 +1,13 @@
 package com.test.domain;
 
 public class SearchVO {
-	private int hid;
-	private String companyCode;
-	private String userid;
-	private String hashtag;
-	private String companyimg;
-	private String pimage;
+	private int one_id;
+	private String email;
+	private String username;
 	private String introduce;
-	private String country;
+	private String profimg;
 	private int aid;
+	private String userid;
 	private String compname_kr;
 	private String compname_en;
 	private String businessType;
@@ -19,9 +17,6 @@ public class SearchVO {
 	private String establish;
 	private String employees;
 	private String homepage;
-	private String address;
-	private String phonenumber;
-	private String fax;
 	private String businessStatus;
 	private String take;
 	private String capital;
@@ -30,52 +25,38 @@ public class SearchVO {
 	private String AboutUs;
 	private String image;
 	private String product;
+	private String product_en;
 	private String usage;
 	private String pcod;
 	private String pinfo;
 	private int cid;
-	private String email;
+	private String phonenumber;
+	private String fax;
+	private String cemail;
+	private String address;
 	private String organizationChart;
 	private int fid;
 	private String myid;
 	private String followid;
 	private boolean flag;
 	private boolean meflag;
-	public int getHid() {
-		return hid;
+	public int getOne_id() {
+		return one_id;
 	}
-	public void setHid(int hid) {
-		this.hid = hid;
+	public void setOne_id(int one_id) {
+		this.one_id = one_id;
 	}
-	public String getCompanyCode() {
-		return companyCode;
+	public String getEmail() {
+		return email;
 	}
-	public void setCompanyCode(String companyCode) {
-		this.companyCode = companyCode;
+	public void setEmail(String email) {
+		this.email = email;
 	}
-	public String getUserid() {
-		return userid;
+	public String getUsername() {
+		return username;
 	}
-	public void setUserid(String userid) {
-		this.userid = userid;
-	}
-	public String getHashtag() {
-		return hashtag;
-	}
-	public void setHashtag(String hashtag) {
-		this.hashtag = hashtag;
-	}
-	public String getCompanyimg() {
-		return companyimg;
-	}
-	public void setCompanyimg(String companyimg) {
-		this.companyimg = companyimg;
-	}
-	public String getPimage() {
-		return pimage;
-	}
-	public void setPimage(String pimage) {
-		this.pimage = pimage;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 	public String getIntroduce() {
 		return introduce;
@@ -83,17 +64,23 @@ public class SearchVO {
 	public void setIntroduce(String introduce) {
 		this.introduce = introduce;
 	}
-	public String getCountry() {
-		return country;
+	public String getProfimg() {
+		return profimg;
 	}
-	public void setCountry(String country) {
-		this.country = country;
+	public void setProfimg(String profimg) {
+		this.profimg = profimg;
 	}
 	public int getAid() {
 		return aid;
 	}
 	public void setAid(int aid) {
 		this.aid = aid;
+	}
+	public String getUserid() {
+		return userid;
+	}
+	public void setUserid(String userid) {
+		this.userid = userid;
 	}
 	public String getCompname_kr() {
 		return compname_kr;
@@ -149,24 +136,6 @@ public class SearchVO {
 	public void setHomepage(String homepage) {
 		this.homepage = homepage;
 	}
-	public String getAddress() {
-		return address;
-	}
-	public void setAddress(String address) {
-		this.address = address;
-	}
-	public String getPhonenumber() {
-		return phonenumber;
-	}
-	public void setPhonenumber(String phonenumber) {
-		this.phonenumber = phonenumber;
-	}
-	public String getFax() {
-		return fax;
-	}
-	public void setFax(String fax) {
-		this.fax = fax;
-	}
 	public String getBusinessStatus() {
 		return businessStatus;
 	}
@@ -215,6 +184,12 @@ public class SearchVO {
 	public void setProduct(String product) {
 		this.product = product;
 	}
+	public String getProduct_en() {
+		return product_en;
+	}
+	public void setProduct_en(String product_en) {
+		this.product_en = product_en;
+	}
 	public String getUsage() {
 		return usage;
 	}
@@ -239,11 +214,29 @@ public class SearchVO {
 	public void setCid(int cid) {
 		this.cid = cid;
 	}
-	public String getEmail() {
-		return email;
+	public String getPhonenumber() {
+		return phonenumber;
 	}
-	public void setEmail(String email) {
-		this.email = email;
+	public void setPhonenumber(String phonenumber) {
+		this.phonenumber = phonenumber;
+	}
+	public String getFax() {
+		return fax;
+	}
+	public void setFax(String fax) {
+		this.fax = fax;
+	}
+	public String getCemail() {
+		return cemail;
+	}
+	public void setCemail(String cemail) {
+		this.cemail = cemail;
+	}
+	public String getAddress() {
+		return address;
+	}
+	public void setAddress(String address) {
+		this.address = address;
 	}
 	public String getOrganizationChart() {
 		return organizationChart;
@@ -281,5 +274,6 @@ public class SearchVO {
 	public void setMeflag(boolean meflag) {
 		this.meflag = meflag;
 	}
+	
 	
 }

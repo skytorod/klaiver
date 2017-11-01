@@ -12,7 +12,7 @@
 <meta charset="utf-8" />
 <meta name="description" content="실시간 기업정보 서비스, 페이지, 정보공유" />
 
- <title>Klaiver 전체 검색</title>
+<title>Klaiver 전체 검색</title>
 <link href="../resources/images/favicon.png" rel="shortcut icon"
 	type="image/png" />
 <link rel='stylesheet' type='text/css'
@@ -43,48 +43,56 @@
 						$('#search_add li').mouseleave(function() {
 							$(this).find('.cover').stop().fadeOut(200);
 						});
-						$("#search").keypress(
-					            function(e) {
-					               if (e.which == '13') {
-					                  if ($("#search").val() != "") {
-					                     var str = $("#search").val();
-					                     var regExp =  /[ \{\}\[\]\/?.,;:|\)*~`!^\-_+┼<>\#$%&\'\"\\(\=]/gi;
-					             	     if(regExp.test(str)){
-					             	    	 var keyword = str.replace(regExp, "");
-					             	    	document.location.href = "../search/alllist?keyword="
-					                            + keyword;
-					             	    }else{
-					             	    	document.location.href = "../search/alllist?keyword="
-					                            + str;
-					             	    }
-					                     
-					                  } else {
-					                     alert("검색어를 입력하세요");
+						$("#search")
+								.keypress(
+										function(e) {
+											if (e.which == '13') {
+												if ($("#search").val() != "") {
+													var str = $("#search")
+															.val();
+													var regExp = /[ \{\}\[\]\/?.,;:|\)*~`!^\-_+┼<>\#$%&\'\"\\(\=]/gi;
+													if (regExp.test(str)) {
+														var keyword = str
+																.replace(
+																		regExp,
+																		"");
+														document.location.href = "../search/alllist?keyword="
+																+ keyword;
+													} else {
+														document.location.href = "../search/alllist?keyword="
+																+ str;
+													}
 
-					                  }
-					                  return false;
-					               }
-					            });
-					         $("#search_btn").click(
-					            function() {
-					               if ($("#search").val() != "") {
-					                  var keyword = $("#search").val();
-					                  var str = $("#search").val();
-					                  var regExp =  /[ \{\}\[\]\/?.,;:|\)*~`!^\-_+┼<>\#$%&\'\"\\(\=]/gi;
-					          	     if(regExp.test(str)){
-					          	    	 var keyword = str.replace(regExp, "");
-					          	    	document.location.href = "../search/alllist?keyword="
-					                         + keyword;
-					          	    }else{
-					          	    	document.location.href = "../search/alllist?keyword="
-					                         + str;
-					          	    }
-					                  return false;
-					               } else {
-					                  alert("검색어를 입력하세요");
-					                  return false;
-					               }
-					            });
+												} else {
+													alert("검색어를 입력하세요");
+
+												}
+												return false;
+											}
+										});
+						$("#search_btn")
+								.click(
+										function() {
+											if ($("#search").val() != "") {
+												var keyword = $("#search")
+														.val();
+												var str = $("#search").val();
+												var regExp = /[ \{\}\[\]\/?.,;:|\)*~`!^\-_+┼<>\#$%&\'\"\\(\=]/gi;
+												if (regExp.test(str)) {
+													var keyword = str.replace(
+															regExp, "");
+													document.location.href = "../search/alllist?keyword="
+															+ keyword;
+												} else {
+													document.location.href = "../search/alllist?keyword="
+															+ str;
+												}
+												return false;
+											} else {
+												alert("검색어를 입력하세요");
+												return false;
+											}
+										});
 
 						/* $("#gocompany").click(function() {
 							var userid = $("#userid").val();
@@ -93,26 +101,26 @@
 					});
 	function gocompany(userid) {
 		var id = userid;
-		window.open("./searchNews?code=" + id, "_blank");
+		window.open("./searchNews?userid=" + id, "_blank");
 	}
 	function gomycompany(userid) {
 
 		var id = userid;
-		window.open("../cboard/news?code=" + id, "_blank");
+		location.href = "../cboard/news?userid=" + id;
 	}
 	function gomysolo(keyword) {
 
 		var keyword = keyword;
-		location.href = "../member/individual?keyword=" + keyword;
+		location.href = "../cboard/news?userid=" + keyword;
 	}
 	function gosolo(keyword) {
 
 		var keyword = keyword;
-		location.href = "../member/individualfollow?email=" + keyword;
+		location.href = "../cboard/news?userid=" + keyword;
 	}
 	function goproduct(keyword) {
 		var keyword = keyword;
-		location.href = "../search/check_product?code=" + keyword;
+		location.href = "../search/check_product?userid=" + keyword;
 	}
 	function gocompluse(keyword) {
 
@@ -146,14 +154,15 @@
 				alt="Klaiver" /></a>
 		</div>
 		<form id="Integrated_search" name="Integrated_search" method="post">
-			<input type="text" id="search" name="qa_text" placeholder="ex)기업명, 대표자명, 이메일, 산업군" />
-			<input type="image" id="search_btn"
-				src="../resources/images/search_btn.png" alt="검색" />
+			<input type="text" id="search" name="qa_text"
+				placeholder="ex)기업명, 대표자명, 이메일, 산업군" /> <input type="image"
+				id="search_btn" src="../resources/images/search_btn.png" alt="검색" />
 		</form>
 		<ul id="icon">
-			<li class="icon1"><a href="../member/individual?keyword=${sessionScope.login}"><div class="cover"></div><img src="../resources/images/icon1.png" alt="개인페이지"/>
-           <c:if test="${fn:length(updatenewpost) ne 0}">new</c:if>
-           </a></li>
+			<li class="icon1"><a
+				href="../cboard/news?userid=${sessionScope.login}"><div
+						class="cover"></div> <img src="../resources/images/icon1.png"
+					alt="개인페이지" /> </a></li>
 			<li class="icon2"><a
 				href="../cboard/companylist?userid=${sessionScope.login}"><div
 						class="cover"></div> <img src="../resources/images/icon2.png"
@@ -202,139 +211,114 @@
 						href="../search/sololist?keyword=${cri.keyword}"><span
 							class="t_s">개인</span>|</a></li>
 
-					<li class="search4"><a href="../search/productlist?keyword=${cri.keyword}"><div class="cover"></div>
-							<img src="../resources/images/search_4.png" alt="포스트검색" /></a></li>
-					<li class="search_alt"><a href="../search/productlist?keyword=${cri.keyword}"><span class="t_s">제품</span></a></li>
+					<li class="search4"><a
+						href="../search/productlist?keyword=${cri.keyword}"><div
+								class="cover"></div> <img src="../resources/images/search_4.png"
+							alt="포스트검색" /></a></li>
+					<li class="search_alt"><a
+						href="../search/productlist?keyword=${cri.keyword}"><span
+							class="t_s">제품</span></a></li>
 				</ul>
-				
+
 			</div>
 
 			<!----기업 콘텐츠---->
 			<div id="contents_wrap">
 				<ul id="search_list">
-						<li class="title">
-							<div>회사</div>
-						</li>
+					<li class="title">
+						<div>회사</div>
+					</li>
 					<c:if test="${fn:length(list) eq 0}">
 						<li>
 							<div>검색결과가 없습니다</div>
 						</li>
 					</c:if>
-					
+
 					<c:forEach items="${list}" var="SearchVO">
-					<c:if test="${SearchVO.meflag eq false}">
-						<li>
-							<div>
-								<div class="search_img">
-
-									<img src="../resources/img/${SearchVO.pimage}"
-										style='cursor: pointer;'
-										onclick="gocompany('${SearchVO.companyCode}');" /> <input
-										type="hidden" id="myid" value="${sessionScope.login}">
-									<input type="hidden" id="email" value="${SearchVO.email}">
-									<input type="hidden" id="userid" value="${SearchVO.userid}">
-								</div>
-								<div class="search_info">
-									<div class="search_info_name">
-										<span class="k_name" style='cursor: pointer;'
-											onclick="gocompany('${SearchVO.companyCode}');">${SearchVO.compname_kr}</span>
-										| <span class="e_name" style='cursor: pointer;'
-											onclick="gocompany('${SearchVO.companyCode}');">${SearchVO.compname_en}</span>
-										
-											<c:if test="${SearchVO.flag eq true}">
-												<span class="follow_btn"><a
-													href="../follow/deleteCom?userid=${sessionScope.login}&followcode=${SearchVO.companyCode}">Following</a></span>
-											</c:if>
-											<c:if test="${SearchVO.flag eq false}">
-												<span class="follow_btn"><a
-													href="../follow/insertComFollow?userid=${sessionScope.login}&followcode=${SearchVO.companyCode}">Follow</a></span>
-											</c:if>
-										
-										
-									</div>
-									<div class="search_info_add" style='cursor: pointer;'
-										onclick="gocompany('${SearchVO.companyCode}');">
-										<span class=" business_type">${SearchVO.businessname}</span> |
-										<span class="city">${SearchVO.country}</span>
-									</div>
-
-								</div>
-							</div>
-						</li>
-						</c:if>
-						<c:if test="${SearchVO.meflag eq true}">
-						<li>
-							<div>
-								<div class="search_img">
-
-									<img src="../resources/img/${SearchVO.pimage}"
-										style='cursor: pointer;'
-										onclick="gomycompany('${SearchVO.companyCode}');" /> <input
-										type="hidden" id="myid" value="${sessionScope.login}">
-									<input type="hidden" id="email" value="${SearchVO.email}">
-									<input type="hidden" id="userid" value="${SearchVO.userid}">
-								</div>
-								<div class="search_info">
-									<div class="search_info_name">
-										<span class="k_name" style='cursor: pointer;'
-											onclick="gomycompany('${SearchVO.companyCode}');">${SearchVO.compname_kr}</span>
-										| <span class="e_name" style='cursor: pointer;'
-											onclick="gomycompany('${SearchVO.companyCode}');">${SearchVO.compname_en}</span>
-									</div>
-									<div class="search_info_add" style='cursor: pointer;'
-										onclick="gomycompany('${SearchVO.companyCode}');">
-										<span class=" business_type">${SearchVO.businessname}</span> |
-										<span class="city">${SearchVO.country}</span>
-									</div>
-
-								</div>
-							</div>
-						</li>				
-						</c:if>
-					</c:forEach>
-				</ul>
-				<div id="msg_box2" style='cursor: pointer;' onclick="gocompluse('${cri.keyword}');"><p class="ss">더보기</p></div>
-				<ul id="search_list">
-						<li class="title">
-							<div >개인</div>
-						</li>
-					<c:if test="${fn:length(listsolo) eq 0}">
-						<li>
-							<div>검색결과가 없습니다</div>
-						</li>
-					</c:if>
-					<c:forEach items="${listsolo}" var="IndividualVO">
-						<c:if test="${sessionScope.login == IndividualVO.email}">
+						<c:if test="${sessionScope.login ne SearchVO.email}">
 							<li>
 								<div>
-									<div class="search_img" style='cursor: pointer;'
-										onclick="gomysolo('${IndividualVO.email}');">
-										<img src="../resources/img/${IndividualVO.profimg}" /> <input
+									<div class="search_img">
+
+										<img src="../resources/img/${SearchVO.profimg}"
+											style='cursor: pointer;'
+											onclick="gocompany('${SearchVO.email}');" /> <input
 											type="hidden" id="myid" value="${sessionScope.login}">
-										<input type="hidden" id="email" value="${IndividualVO.email}">
+										<input type="hidden" id="email" value="${SearchVO.email}">
+										<input type="hidden" id="userid" value="${SearchVO.userid}">
 									</div>
 									<div class="search_info">
 										<div class="search_info_name">
 											<span class="k_name" style='cursor: pointer;'
-												onclick="gomysolo('${IndividualVO.email}');">${IndividualVO.first}${IndividualVO.last}</span>
+												onclick="gocompany('${SearchVO.email}');">${SearchVO.compname_kr}</span>
+											| <span class="e_name" style='cursor: pointer;'
+												onclick="gocompany('${SearchVO.email}');">${SearchVO.compname_en}</span>
+
+											<c:if test="${SearchVO.flag eq true}">
+												<span class="follow_btn"><a
+													href="../follow/delete?userid=${sessionScope.login}&followid=${SearchVO.email}">Following</a></span>
+											</c:if>
+											<c:if test="${SearchVO.flag eq false}">
+												<span class="follow_btn"><a
+													href="../follow/insertFollow?userid=${sessionScope.login}&followid=${SearchVO.email}">Follow</a></span>
+											</c:if>
 										</div>
-										<div class="search_info_name">
-											<span class="k_name" style='cursor: pointer;'
-												onclick="gomysolo('${IndividualVO.email}');">${IndividualVO.email}</span>
-											|<span class="k_name" style='cursor: pointer;'
-												onclick="gomysolo('${IndividualVO.email}');">${IndividualVO.company}</span>
-											| <span class="e_name">${IndividualVO.industry}</span>
-										</div>
-										<div class="search_info_add">
-											<span class=" business_type">${IndividualVO.city}</span> | <span
-												class="city">${IndividualVO.country}</span>
+										<div class="search_info_add" style='cursor: pointer;'
+											onclick="gocompany('${SearchVO.email}');">
+											<span class=" business_type">${SearchVO.businessname}</span>
+											| <span class="city">${SearchVO.address}</span>
 										</div>
 
 									</div>
 								</div>
 							</li>
 						</c:if>
-						<c:if test="${sessionScope.login!=IndividualVO.email}">
+						<c:if test="${sessionScope.login eq SearchVO.email}">
+							<li>
+								<div>
+									<div class="search_img">
+
+										<img src="../resources/img/${SearchVO.profimg}"
+											style='cursor: pointer;'
+											onclick="gomycompany('${SearchVO.email}');" /> <input
+											type="hidden" id="myid" value="${sessionScope.login}">
+										<input type="hidden" id="email" value="${SearchVO.email}">
+										<input type="hidden" id="userid" value="${SearchVO.userid}">
+									</div>
+									<div class="search_info">
+										<div class="search_info_name">
+											<span class="k_name" style='cursor: pointer;'
+												onclick="gomycompany('${SearchVO.email}');">${SearchVO.compname_kr}</span>
+											| <span class="e_name" style='cursor: pointer;'
+												onclick="gomycompany('${SearchVO.email}');">${SearchVO.compname_en}</span>
+										</div>
+										<div class="search_info_add" style='cursor: pointer;'
+											onclick="gomycompany('${SearchVO.email}');">
+											<span class=" business_type">${SearchVO.businessname}</span>
+											| <span class="city">${SearchVO.address}</span>
+										</div>
+
+									</div>
+								</div>
+							</li>
+						</c:if>
+					</c:forEach>
+				</ul>
+				<div id="msg_box2" style='cursor: pointer;'
+					onclick="gocompluse('${cri.keyword}');">
+					<p class="ss">더보기</p>
+				</div>
+				<ul id="search_list">
+					<li class="title">
+						<div>개인</div>
+					</li>
+					<c:if test="${fn:length(listsolo) eq 0}">
+						<li>
+							<div>검색결과가 없습니다</div>
+						</li>
+					</c:if>
+					<c:forEach items="${listsolo}" var="IndividualVO">
+						<c:if test="${sessionScope.login ne IndividualVO.email}">
 							<li>
 								<div>
 									<div class="search_img" style='cursor: pointer;'
@@ -346,15 +330,11 @@
 									<div class="search_info">
 										<div class="search_info_name">
 											<span class="k_name" style='cursor: pointer;'
-												onclick="gosolo('${IndividualVO.email}');">${IndividualVO.first}${IndividualVO.last}</span>
+												onclick="gosolo('${IndividualVO.email}');">${IndividualVO.username}</span>
 										</div>
 										<div class="search_info_name">
 											<span class="k_name" style='cursor: pointer;'
 												onclick="gosolo('${IndividualVO.email}');">${IndividualVO.email}</span>
-											| <span class="k_name" style='cursor: pointer;'
-												onclick="gosolo('${IndividualVO.email}');">${IndividualVO.company}</span>
-											| <span class="e_name" style='cursor: pointer;'
-												onclick="gosolo('${IndividualVO.email}');">${IndividualVO.industry}</span>
 											<c:if test="${IndividualVO.flag eq true}">
 												<span class="follow_btn"><a
 													href="../follow/delete?userid=${sessionScope.login}&followid=${IndividualVO.email}">Following</a></span>
@@ -364,11 +344,29 @@
 													href="../follow/insertFollow?userid=${sessionScope.login}&followid=${IndividualVO.email}">Follow</a></span>
 											</c:if>
 										</div>
-										<div class="search_info_add">
-											<span class=" business_type" style='cursor: pointer;'
-												onclick="gosolo('${IndividualVO.email}');">${IndividualVO.city}</span>
-											| <span class="city" style='cursor: pointer;'
-												onclick="gosolo('${IndividualVO.email}');">${IndividualVO.country}</span>
+
+									</div>
+								</div>
+							</li>
+						</c:if>
+						<c:if test="${sessionScope.login eq IndividualVO.email}">
+							<li>
+								<div>
+									<div class="search_img" style='cursor: pointer;'
+										onclick="gomysolo('${IndividualVO.email}');">
+										<img src="../resources/img/${IndividualVO.profimg}" /> <input
+											type="hidden" id="myid" value="${sessionScope.login}">
+										<input type="hidden" id="email" value="${IndividualVO.email}">
+									</div>
+									<div class="search_info">
+										<div class="search_info_name">
+											<span class="k_name" style='cursor: pointer;'
+												onclick="gomysolo('${IndividualVO.email}');">${IndividualVO.username}</span>
+										</div>
+										<div class="search_info_name">
+											<span class="k_name" style='cursor: pointer;'
+												onclick="gomysolo('${IndividualVO.email}');">${IndividualVO.email}</span>
+											
 										</div>
 
 									</div>
@@ -377,48 +375,55 @@
 						</c:if>
 					</c:forEach>
 				</ul>
-				<div id="msg_box2" style='cursor: pointer;' onclick="gosolopluse('${cri.keyword}');"><p class="ss">더보기</p></div>
-			<ul id="search_list">
-						<li class="title">
-							<div >제품</div>
-						</li>
+				<div id="msg_box2" style='cursor: pointer;'
+					onclick="gosolopluse('${cri.keyword}');">
+					<p class="ss">더보기</p>
+				</div>
+
+				<ul id="search_list">
+					<li class="title">
+						<div>제품</div>
+					</li>
 					<c:if test="${fn:length(productlist) eq 0}">
 						<li>
 							<div>검색결과가 없습니다</div>
 						</li>
 					</c:if>
 					<c:forEach items="${productlist}" var="product">
-							<li>
-								<div>
-									<div class="search_img" style='cursor: pointer;'
-										onclick="goproduct('${product.companyCode}');"  style="width:20%">
-										<img src="../resources/img/${product.image}" />
-										<input type="hidden" id="pid" value="${product.pid}">
+						<li>
+							<div>
+								<div class="search_img" style='cursor: pointer;'
+									onclick="goproduct('${product.userid}');" style="width:20%">
+									<img src="../resources/img/${product.image}" /> <input
+										type="hidden" id="pid" value="${product.pid}">
+								</div>
+								<div class="search_info" style="width: 73%;">
+									<div class="search_info_name">
+										<span class="k_name" style='cursor: pointer;'
+											onclick="goproduct('${product.userid}');">${product.product}(${product.product_en})</span>
 									</div>
-									<div class="search_info"  style="width:73%;">
-										<div class="search_info_name">
-											<span class="k_name" style='cursor: pointer;'
-												onclick="goproduct('${product.companyCode}');">${product.product}(${product.product_en})</span>
-										</div>
-										<div class="search_info_name">
-											<span class="k_name" style='cursor: pointer;'
-												onclick="goproduct('${product.companyCode}');">${product.pinfo}</span>
-										</div>
+									<div class="search_info_name">
+										<span class="k_name" style='cursor: pointer;'
+											onclick="goproduct('${product.userid}');">${product.pinfo}</span>
 									</div>
 								</div>
-							</li>
+							</div>
+						</li>
 					</c:forEach>
 				</ul>
-				<div id="msg_box2" style='cursor: pointer;' onclick="goproductpluse('${cri.keyword}');"><p class="ss">더보기</p></div>
-			
+				<div id="msg_box2" style='cursor: pointer;'
+					onclick="goproductpluse('${cri.keyword}');">
+					<p class="ss">더보기</p>
+				</div>
+
 			</div>
 		</div>
 
 		<!------------==============================  메세지 박스  ==============================------------>
 		<!-- 		팔로우리스트  			-->
-		<%@ include file="../follow/followlist.jsp" %>
-		
-<!-- 		팔로우리스트  			-->
+		<%@ include file="../follow/followlist.jsp"%>
+
+		<!-- 		팔로우리스트  			-->
 	</section>
 </body>
 </html>

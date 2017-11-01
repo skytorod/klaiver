@@ -26,18 +26,7 @@ public class SearchDAOImpl implements SearchDAO {
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne(namespace +".search",keyword );
 	}
-	@Override
-	public List<SearchVO> listSearch(SearchCriteria cri) throws Exception {
-		// TODO Auto-generated method stub
-		return sqlSession.selectList(namespace+".listSearch",cri);
-		
-	}
-
-	@Override
-	public int listSearchCount(SearchCriteria cri) throws Exception {
-		// TODO Auto-generated method stub
-		return sqlSession.selectOne(namespace+".listSearchCount",cri);
-	}
+	
 	
 	@Override
 	public K_homeVO search_home(String userid) throws Exception {
@@ -69,10 +58,33 @@ public class SearchDAOImpl implements SearchDAO {
 		// TODO Auto-generated method stub
 		return sqlSession.selectList(namespace +".search_home_list",userid);
 	}
+	
+////////////////////////////////////////////////////////////////////////////////
+	
 	@Override
 	public List<SearchVO> list(SearchCriteria cri) throws Exception {
 		// TODO Auto-generated method stub
 		return sqlSession.selectList(namespace +".list",cri);
+	}
+	@Override
+	public List<SearchVO> listsolo(SearchCriteria cri) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList(namespace +".listsolo",cri);
+	}
+	@Override
+	public List<K_productVO> searchproduct(SearchCriteria cri) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList(namespace +".searchproduct",cri);
+	}
+	@Override
+	public List<SearchVO> listSearch(SearchCriteria cri) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList(namespace+".listSearch",cri);
+	}
+	@Override
+	public int listSearchCount(SearchCriteria cri) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne(namespace+".listSearchCount",cri);
 	}
 	@Override
 	public List<K_productVO> listSearchproductCriteria(SearchCriteria cri) throws Exception {
@@ -85,4 +97,17 @@ public class SearchDAOImpl implements SearchDAO {
 		return sqlSession.selectOne(namespace +".listSearchproductCount",cri);
 	}
 
+
+	@Override
+	public int listsoloSearchCount(SearchCriteria cri) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne(namespace +".listsoloSearchCount",cri);
+	}
+
+
+	@Override
+	public List<SearchVO> listsoloSearchCriteria(SearchCriteria cri) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList(namespace +".listsoloSearchCriteria",cri);
+	}
 }

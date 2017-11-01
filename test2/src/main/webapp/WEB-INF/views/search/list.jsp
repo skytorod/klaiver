@@ -131,10 +131,10 @@
 		</form>
 		<ul id="icon">
 			<li class="icon1"><a
-				href="../member/individual?keyword=${sessionScope.login}">
-					<div class="cover"></div> <img src="../resources/images/icon1.png"
-					alt="개인페이지" /> <c:if test="${fn:length(updatenewpost) ne 0}">new</c:if>
-			</a></li>
+					href="../cboard/news?userid=${sessionScope.login}"><div
+							class="cover"></div> <img src="../resources/images/icon1.png"
+						alt="개인페이지" />
+				</a></li>
 			<li class="icon2"><a
 				href="../cboard/companylist?userid=${sessionScope.login}"><div
 						class="cover"></div> <img src="../resources/images/icon2.png"
@@ -203,9 +203,9 @@
 							<div>
 								<div class="search_img">
 
-									<img src="../resources/img/${SearchVO.pimage}"
+									<img src="../resources/img/${SearchVO.profimg}"
 										style='cursor: pointer;'
-										onclick="gocompany('${SearchVO.companyCode}');" /> <input
+										onclick="gocompany('${SearchVO.userid}');" /> <input
 										type="hidden" id="myid" value="${sessionScope.login}">
 									<input type="hidden" id="email" value="${SearchVO.email}">
 									<input type="hidden" id="userid" value="${SearchVO.userid}">
@@ -213,25 +213,25 @@
 								<div class="search_info">
 									<div class="search_info_name">
 										<span class="k_name" style='cursor: pointer;'
-											onclick="gocompany('${SearchVO.companyCode}');">${SearchVO.compname_kr}</span>
+											onclick="gocompany('${SearchVO.userid}');">${SearchVO.compname_kr}</span>
 										| <span class="e_name" style='cursor: pointer;'
-											onclick="gocompany('${SearchVO.companyCode}');">${SearchVO.compname_en}</span>
+											onclick="gocompany('${SearchVO.userid}');">${SearchVO.compname_en}</span>
 										
 											<c:if test="${SearchVO.flag eq true}">
 												<span class="follow_btn"><a
-													href="../follow/deleteCom?userid=${sessionScope.login}&followcode=${SearchVO.companyCode}">Following</a></span>
+													href="../follow/deleteCom?userid=${sessionScope.login}&followcode=${SearchVO.userid}">Following</a></span>
 											</c:if>
 											<c:if test="${SearchVO.flag eq false}">
 												<span class="follow_btn"><a
-													href="../follow/insertComFollow?userid=${sessionScope.login}&followcode=${SearchVO.companyCode}">Follow</a></span>
+													href="../follow/insertComFollow?userid=${sessionScope.login}&followcode=${SearchVO.userid}">Follow</a></span>
 											</c:if>
 										
 										
 									</div>
 									<div class="search_info_add" style='cursor: pointer;'
-										onclick="gocompany('${SearchVO.companyCode}');">
+										onclick="gocompany('${SearchVO.userid}');">
 										<span class=" business_type">${SearchVO.businessname}</span> |
-										<span class="city">${SearchVO.country}</span>
+										<span class="city">${SearchVO.address}</span>
 									</div>
 
 								</div>
@@ -243,9 +243,9 @@
 							<div>
 								<div class="search_img">
 
-									<img src="../resources/img/${SearchVO.pimage}"
+									<img src="../resources/img/${SearchVO.profimg}"
 										style='cursor: pointer;'
-										onclick="gomycompany('${SearchVO.companyCode}');" /> <input
+										onclick="gomycompany('${SearchVO.userid}');" /> <input
 										type="hidden" id="myid" value="${sessionScope.login}">
 									<input type="hidden" id="email" value="${SearchVO.email}">
 									<input type="hidden" id="userid" value="${SearchVO.userid}">
@@ -253,14 +253,14 @@
 								<div class="search_info">
 									<div class="search_info_name">
 										<span class="k_name" style='cursor: pointer;'
-											onclick="gomycompany('${SearchVO.companyCode}');">${SearchVO.compname_kr}</span>
+											onclick="gomycompany('${SearchVO.userid}');">${SearchVO.compname_kr}</span>
 										| <span class="e_name" style='cursor: pointer;'
-											onclick="gomycompany('${SearchVO.companyCode}');">${SearchVO.compname_en}</span>
+											onclick="gomycompany('${SearchVO.userid}');">${SearchVO.compname_en}</span>
 									</div>
 									<div class="search_info_add" style='cursor: pointer;'
-										onclick="gomycompany('${SearchVO.companyCode}');">
+										onclick="gomycompany('${SearchVO.userid}');">
 										<span class=" business_type">${SearchVO.businessname}</span> |
-										<span class="city">${SearchVO.country}</span>
+										<span class="city">${SearchVO.address}</span>
 									</div>
 
 								</div>

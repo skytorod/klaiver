@@ -24,16 +24,7 @@ public class SearchServiceImpl implements SearchService{
 		// TODO Auto-generated method stub
 		return dao.search(keyword);
 	}
-	@Override
-	public List<SearchVO> listSearchCriteria(SearchCriteria cri) throws Exception {
-		// TODO Auto-generated method stub
-		return dao.listSearch(cri);
-	}
-	@Override
-	public int listSearchCount(SearchCriteria cri) throws Exception {
-		// TODO Auto-generated method stub
-		return dao.listSearchCount(cri);
-	}
+	
 	@Override
 	public K_homeVO search_home(String userid) throws Exception {
 		// TODO Auto-generated method stub
@@ -64,10 +55,33 @@ public class SearchServiceImpl implements SearchService{
 		// TODO Auto-generated method stub
 		return dao.search_home_list(userid);
 	}
+	
+	
+	////////////////////////////////////////////////////////////////////////
 	@Override
 	public List<SearchVO> list(SearchCriteria cri) throws Exception {
 		// TODO Auto-generated method stub
 		return dao.list(cri);
+	}
+	@Override
+	public List<SearchVO> listsolo(SearchCriteria cri) throws Exception {
+		// TODO Auto-generated method stub
+		return dao.listsolo(cri);
+	}
+	@Override
+	public List<K_productVO> searchproduct(SearchCriteria cri) throws Exception {
+		// TODO Auto-generated method stub
+		return dao.searchproduct(cri);
+	}
+	@Override
+	public List<SearchVO> listSearchCriteria(SearchCriteria cri) throws Exception {
+		// TODO Auto-generated method stub
+		return dao.listSearch(cri);
+	}
+	@Override
+	public int listSearchCount(SearchCriteria cri) throws Exception {
+		// TODO Auto-generated method stub
+		return dao.listSearchCount(cri);
 	}
 	@Override
 	public List<K_productVO> listSearchproductCriteria(SearchCriteria cri) throws Exception {
@@ -80,4 +94,15 @@ public class SearchServiceImpl implements SearchService{
 		return dao.listSearchproductCount(cri);
 	}
 
+	@Override
+	public int listsoloSearchCount(SearchCriteria cri) throws Exception {
+		// TODO Auto-generated method stub
+		return dao.listsoloSearchCount(cri);
+	}
+
+	@Override
+	public List<SearchVO> listsoloSearchCriteria(SearchCriteria cri) throws Exception {
+		// TODO Auto-generated method stub
+		return dao.listsoloSearchCriteria(cri);
+	}
 }

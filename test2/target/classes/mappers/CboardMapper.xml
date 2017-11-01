@@ -40,7 +40,7 @@
 	<select id="readPage_contact" resultType="K_contactVO">
 		SELECT
 		`cid`, `userid`,
-		`phonenumber`, `fax`, `email`, `address`,
+		`phonenumber`, `fax`, `cemail`, `address`,
 		`organizationChart`
 		FROM
 		`k_contact`
@@ -63,10 +63,10 @@
 	<insert id="insert_contact" parameterType="com.test.domain.K_contactVO">
 		INSERT INTO `k_contact`
 		( `userid`,`phonenumber`, `fax`,
-		`email`,`address`,`organizationChart`)
+		`cemail`,`address`,`organizationChart`)
 		VALUES
 		(#{userid},#{phonenumber},
-		#{fax},#{email},#{address},#{organizationChart});
+		#{fax},#{cemail},#{address},#{organizationChart});
 	</insert>
 	<insert id="insert_product" parameterType="com.test.domain.K_productVO">
 		INSERT INTO 
@@ -106,7 +106,7 @@
 		`phonenumber`
 		=#{phonenumber},`fax`
 		=#{fax},
-		`email` =#{email},`address`
+		`cemail` =#{cemail},`address`
 		=#{address},`organizationChart`
 		=#{organizationChart}
 		where

@@ -6,17 +6,16 @@ import java.util.Map;
 import com.test.domain.FollowVO;
 
 public interface FollowService {
-//////회사정보 insert
 
-	public void insertfollow(Map<String, String> map) throws Exception;
+	
 	
 	public List<FollowVO> listSearchCriteriaCompany(Map<String, String> map) throws Exception;
 	
-	public List<FollowVO> listSearchCriteriasearch(String id) throws Exception;
+	
 
-	public List<FollowVO> getid(String id) throws Exception;
+	
 
-	public void delete(Map<String, String> map1) throws Exception;
+	
 
 	public int followercount(String id) throws Exception;
 
@@ -59,6 +58,15 @@ public interface FollowService {
 	public void newpost(String id) throws Exception;
 
 	public void flasenewpost(Map<String, String> map)throws Exception;
+	//////////////////////////////////////////////////////////////////////
+	//젙체 페이지 팔로우 리스트 불러오기
+	public List<FollowVO> listSearchCriteriasearch(String id) throws Exception;
+	//나의 팔로우 아이디 모두 가져오기
+	public List<FollowVO> getid(String id) throws Exception;
+	//팔로우 하기
+	public void insertfollow(Map<String, String> map) throws Exception;
+	//언팔로우 하기
+	public void delete(Map<String, String> map1) throws Exception;
 
 
 }

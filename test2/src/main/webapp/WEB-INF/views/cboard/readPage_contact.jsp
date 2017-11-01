@@ -158,11 +158,10 @@ function myComfollower(code){
 		</form>
 		<ul id="icon">
 			<li class="icon1"><a
-				href="../member/individual?keyword=${sessionScope.login}">
-					<div class="cover"></div>
-					<img src="../resources/images/icon1.png" alt="개인페이지" /> <c:if
-						test="${fn:length(updatenewpost) ne 0}">new</c:if>
-			</a></li>
+					href="../cboard/news?userid=${sessionScope.login}"><div
+							class="cover"></div> <img src="../resources/images/icon1.png"
+						alt="개인페이지" />
+				</a></li>
 			<li class="icon2"><a
 				href="../cboard/companylist?userid=${sessionScope.login}"><div
 						class="cover"></div> <img src="../resources/images/icon2.png"
@@ -243,7 +242,7 @@ function myComfollower(code){
 					</tr>
 					<tr>
 						<td class="list">Email</td>
-						<td class="data"><span id="corporate_form">${k_contactVO.email}</span></td>
+						<td class="data"><span id="corporate_form">${k_contactVO.cemail}</span></td>
 					</tr>
 					<tr>
 						<td class="list">주소</td>

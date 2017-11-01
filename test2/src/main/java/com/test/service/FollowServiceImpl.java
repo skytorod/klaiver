@@ -16,11 +16,7 @@ public class FollowServiceImpl implements FollowService {
 	private FollowDAO dao;
 //////회사정보 insert
 
-	@Override
-	public void insertfollow(Map<String, String> map) throws Exception {
-		// TODO Auto-generated method stub
-		dao.insertfollow(map);
-	}
+	
 
 	@Override
 	public List<FollowVO> listSearchCriteriaCompany(Map<String, String> map) throws Exception {
@@ -28,24 +24,8 @@ public class FollowServiceImpl implements FollowService {
 		return dao.listSearchCriteriaCompany(map);
 	}
 
-	@Override
-	public List<FollowVO> listSearchCriteriasearch(String id) throws Exception {
-		// TODO Auto-generated method stub
-		return dao.listSearchsearch(id);
-	}
 
-	@Override
-	public List<FollowVO> getid(String id) throws Exception {
-		// TODO Auto-generated method stub
-		return dao.getid(id);
-	}
-
-	@Override
-	public void delete(Map<String, String> map1) throws Exception {
-		// TODO Auto-generated method stub
-		dao.delete(map1);
-	}
-
+	
 	@Override
 	public int followercount(String id) throws Exception {
 		// TODO Auto-generated method stub
@@ -168,7 +148,26 @@ public class FollowServiceImpl implements FollowService {
 		// TODO Auto-generated method stub
 		 dao.flasenewpost(map);
 	}
-
-	
+////////////////////////////////////////////////////////////////////
+	@Override
+	public List<FollowVO> listSearchCriteriasearch(String id) throws Exception {
+		// TODO Auto-generated method stub
+		return dao.listSearchsearch(id);
+	}
+	@Override
+	public List<FollowVO> getid(String id) throws Exception {
+		// TODO Auto-generated method stub
+		return dao.getid(id);
+	}
+	@Override
+	public void insertfollow(Map<String, String> map) throws Exception {
+		// TODO Auto-generated method stub
+		dao.insertfollow(map);
+	}
+	@Override
+	public void delete(Map<String, String> map1) throws Exception {
+		// TODO Auto-generated method stub
+		dao.delete(map1);
+	}
 
 }

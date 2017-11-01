@@ -28,6 +28,7 @@ import com.test.domain.K_productVO;
 import com.test.domain.ScrollBoardVO;
 import com.test.service.CategoryService;
 import com.test.service.CboardService;
+import com.test.service.FollowService;
 
 @Controller
 @RequestMapping("/cboard/*")
@@ -35,12 +36,15 @@ public class CompanyInfoController {
 	@Inject
 	private CboardService service;
 	@Inject
-	private CategoryService service1;
+	private CategoryService serviceCate;
+	@Inject
+	private FollowService serviceFollow;
 
 	@RequestMapping(value = "/news", method = RequestMethod.GET)
 	public void newsGET(@RequestParam("userid") String userid, HttpServletRequest request, Model model)
 			throws Exception {
 		String id = (String) request.getSession().getAttribute("login");
+		model.addAttribute("followlist",serviceFollow.listSearchCriteriasearch(id));
 		model.addAttribute("IndividualVO", service.memberinfo(userid));
 		model.addAttribute("sessionidName", service.serssionidName(id));
 		if(service.readPage_about(userid) !=null){
@@ -52,14 +56,13 @@ public class CompanyInfoController {
 		
 		
 		/*
-		 * model.addAttribute("followlist",
-		 * service2.listSearchCriteriasearch(id)); Map<String, String> map = new
+		 *  Map<String, String> map = new
 		 * HashMap<String, String>(); map.put("userid", id);
 		 * model.addAttribute("followcompanylist",
-		 * service2.listSearchCriteriaCompany(map));
+		 * serviceFollow.listSearchCriteriaCompany(map));
 		 * model.addAttribute(service.readPage_about(code));
 		 * model.addAttribute(service.readPage_home(code));
-		 * model.addAttribute("followerComcount",service2.followerComcount(code)
+		 * model.addAttribute("followerComcount",serviceFollow.followerComcount(code)
 		 * );
 		 * 
 		 * 
@@ -93,6 +96,7 @@ public class CompanyInfoController {
 	public void Read_aboutGet(@RequestParam("userid") String userid, HttpServletRequest request, Model model)
 			throws Exception {
 		String id = (String) request.getSession().getAttribute("login");
+		model.addAttribute("followlist",serviceFollow.listSearchCriteriasearch(id));
 		model.addAttribute("IndividualVO", service.memberinfo(userid));
 		model.addAttribute("sessionidName", service.serssionidName(id));
 		K_aboutVO avo = service.readPage_about(userid);
@@ -100,8 +104,12 @@ public class CompanyInfoController {
 			avo.setAboutUs(avo.getAboutUs().replace("\r\n", "<br>").trim());
 		}
 		model.addAttribute(avo);
-		model.addAttribute(service.readPage_about(userid));
-		model.addAttribute(service.readPage_contact(userid));
+		if(service.readPage_about(userid) !=null){
+			model.addAttribute(service.readPage_about(userid));
+		}
+		if(service.readPage_contact(userid) !=null){
+			model.addAttribute(service.readPage_contact(userid));
+		}
 
 	}
 
@@ -109,6 +117,7 @@ public class CompanyInfoController {
 	public void Read_productGet(@RequestParam("userid") String userid, HttpServletRequest request, Model model)
 			throws Exception {
 		String id = (String) request.getSession().getAttribute("login");
+		model.addAttribute("followlist",serviceFollow.listSearchCriteriasearch(id));
 		model.addAttribute("IndividualVO", service.memberinfo(userid));
 		model.addAttribute("sessionidName", service.serssionidName(id));
 		List<K_productVO> pvo = service.readPage_product(userid);
@@ -138,23 +147,28 @@ public class CompanyInfoController {
 	public void Read_contactGet(@RequestParam("userid") String userid, HttpServletRequest request, Model model)
 			throws Exception {
 		String id = (String) request.getSession().getAttribute("login");
+		model.addAttribute("followlist",serviceFollow.listSearchCriteriasearch(id));
 		model.addAttribute("IndividualVO", service.memberinfo(userid));
 		model.addAttribute("sessionidName", service.serssionidName(id));
-		model.addAttribute(service.readPage_contact(userid));
-		model.addAttribute(service.readPage_about(userid));
+		if(service.readPage_about(userid) !=null){
+			model.addAttribute(service.readPage_about(userid));
+		}
+		if(service.readPage_contact(userid) !=null){
+			model.addAttribute(service.readPage_contact(userid));
+		}
 	}
 
 	@RequestMapping(value = "/register_about", method = RequestMethod.GET)
 	public void CboardaboutGet(CategoryVO vo, Model model, HttpServletRequest request) throws Exception {
 		String id = (String) request.getSession().getAttribute("login");
-		model.addAttribute("list", service1.categoryget(vo));
+		model.addAttribute("list", serviceCate.categoryget(vo));
 	}
 
 	@RequestMapping(value = "/register_about/{mc_number}", method = RequestMethod.GET)
 	@ResponseBody
 	public List<CategoryVO> categoryget(@PathVariable("mc_number") Integer mc_number) throws Exception {
 
-		return service1.smallcate(mc_number);
+		return serviceCate.smallcate(mc_number);
 	}
 
 	@RequestMapping(value = "/register_about", method = RequestMethod.POST)
@@ -191,10 +205,10 @@ public class CompanyInfoController {
 		} else {
 			vo.setPinfo(pinfo);
 		}
-		File path = new File("C:/Users/GyeoungJae/git/skytorod/test2/src/main/webapp/resources/img");
+		File path = new File("C:/Users/GyeoungJae/git/klaiver/test2/src/main/webapp/resources/img");
 		if (!path.exists()) {
 			path.mkdirs();
-			path = new File("C:/Users/GyeoungJae/git/skytorod/test2/src/main/webapp/resources/img");
+			path = new File("C:/Users/GyeoungJae/git/klaiver/test2/src/main/webapp/resources/img");
 		}
 		if (test1 != null) {
 			String saveName = UUID.randomUUID().toString() + "_" + test1.getOriginalFilename().replaceAll(" ", "");
@@ -223,6 +237,7 @@ public class CompanyInfoController {
 	public void Update_homeGEt(@RequestParam("userid") String userid, HttpServletRequest request, Model model)
 			throws Exception {
 		String id = (String) request.getSession().getAttribute("login");
+		model.addAttribute("followlist",serviceFollow.listSearchCriteriasearch(id));
 		List<JoinOne> ivo =service.memberinfo(userid);
 		if (ivo.get(0).getIntroduce() != null) {
 			ivo.get(0).setIntroduce(ivo.get(0).getIntroduce().replaceAll("<br>", "\r\n"));
@@ -245,14 +260,14 @@ public class CompanyInfoController {
 		if (testu1 != null) {
 			String fakeimg = vo.getFakeimg();
 			System.out.println(fakeimg);
-			File path_update = new File("C:/Users/GyeoungJae/git/skytorod/test2/src/main/webapp/resources/img");
+			File path_update = new File("C:/Users/GyeoungJae/git/klaiver/test2/src/main/webapp/resources/img");
 
 			if (!path_update.exists()) {
 				path_update.mkdirs();
 				System.out.println("cutewebi 디렉토리를 생성했습니다.");
-				path_update = new File("C:/Users/GyeoungJae/git/skytorod/test2/src/main/webapp/resources/img");
+				path_update = new File("C:/Users/GyeoungJae/git/klaiver/test2/src/main/webapp/resources/img");
 			}
-			File path = new File("C:/Users/GyeoungJae/git/skytorod/test2/src/main/webapp/resources/img/" + fakeimg);
+			File path = new File("C:/Users/GyeoungJae/git/klaiver/test2/src/main/webapp/resources/img/" + fakeimg);
 			if (fakeimg != "noimg.jsp") {
 				if (path.exists() == true) {
 					path.delete();
@@ -276,9 +291,10 @@ public class CompanyInfoController {
 	public void Update_aboutGEt(@RequestParam("aid") int aid, @RequestParam("userid") String userid, CategoryVO vo,
 			HttpServletRequest request, Model model) throws Exception {
 		String id = (String) request.getSession().getAttribute("login");
+		model.addAttribute("followlist",serviceFollow.listSearchCriteriasearch(id));
 		model.addAttribute("IndividualVO", service.memberinfo(userid));
 		model.addAttribute("sessionidName", service.serssionidName(id));
-		model.addAttribute("list", service1.categoryget(vo));
+		model.addAttribute("list", serviceCate.categoryget(vo));
 		model.addAttribute(service.readPage_about(userid));
 		model.addAttribute(service.readPage_contact(userid));
 		K_aboutVO avo = service.readPage_about(userid);
@@ -297,7 +313,6 @@ public class CompanyInfoController {
 	public void Update_productGEt(@RequestParam("pid") int pid, HttpServletRequest request, Model model, Locale locale)
 			throws Exception {
 		String id = (String) request.getSession().getAttribute("login");
-
 		K_productVO pvo = service.updateread_product(pid);
 		if (pvo.getPinfo() != null) {
 			pvo.setPinfo(pvo.getPinfo().replace("<br>", "\r\n").trim());
@@ -314,14 +329,14 @@ public class CompanyInfoController {
 			pvo.setPinfo(pvo.getPinfo().replace("\r\n", "<br>").trim());
 		}
 
-		File path = new File("C:/Users/GyeoungJae/git/skytorod/test2/src/main/webapp/resources/img");
+		File path = new File("C:/Users/GyeoungJae/git/klaiver/test2/src/main/webapp/resources/img");
 		if (!path.exists()) {
 			path.mkdirs();
-			path = new File("C:/Users/GyeoungJae/git/skytorod/test2/src/main/webapp/resources/img");
+			path = new File("C:/Users/GyeoungJae/git/klaiver/test2/src/main/webapp/resources/img");
 		}
 		if (test1 != null) {
 			String fakeimg = pvo.getFakeimg();
-			File path1 = new File("C:/Users/GyeoungJae/git/skytorod/test2/src/main/webapp/resources/img/" + fakeimg);
+			File path1 = new File("C:/Users/GyeoungJae/git/klaiver/test2/src/main/webapp/resources/img/" + fakeimg);
 			if (path1.exists() == true) {
 				path1.delete();
 			}
@@ -337,7 +352,7 @@ public class CompanyInfoController {
 	@RequestMapping(value = "/productremove", method = RequestMethod.POST)
 	public void remove(@ModelAttribute("pid") int pid,String fakeimg, HttpServletRequest request, Model model, ScrollBoardVO vo)
 			throws Exception {
-		File path = new File("C:/Users/GyeoungJae/git/skytorod/test2/src/main/webapp/resources/img/" + fakeimg);
+		File path = new File("C:/Users/GyeoungJae/git/klaiver/test2/src/main/webapp/resources/img/" + fakeimg);
 		service.remove(pid);
 		if (fakeimg != "noimg.jsp") {
 			if (path.exists() == true) {
@@ -350,6 +365,7 @@ public class CompanyInfoController {
 	public void Update_contactGEt(@RequestParam("cid") int cid, @RequestParam("userid") String userid, K_contactVO cvo,
 			HttpServletRequest request, Model model) throws Exception {
 		String id = (String) request.getSession().getAttribute("login");
+		model.addAttribute("followlist",serviceFollow.listSearchCriteriasearch(id));
 		model.addAttribute("IndividualVO", service.memberinfo(userid));
 		model.addAttribute("sessionidName", service.serssionidName(id));
 		model.addAttribute(service.readPage_about(userid));

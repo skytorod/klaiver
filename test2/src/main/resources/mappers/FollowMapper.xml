@@ -4,12 +4,7 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.test.mapper.FollowMapper">
-	<insert id="insertfollow" parameterType="FollowVO">
-		INSERT INTO k_follow
-		(myid, followid)
-		VALUES
-		(#{userid},#{followid});
-	</insert>
+	<!-- 
 	<select id="listSearchCriteriaCompany" resultType="FollowVO">
 		SELECT
 		kfc.fcid, kfc.fcmyid, kfc.followcode,kh.pimage,ka.compname_kr,ka.compname_en
@@ -23,40 +18,15 @@
 		where kfc.fcmyid = #{userid};
 
 	</select>
-	<select id="listSearchsearch" resultType="FollowVO">
-		SELECT
-		kf.fid, kf.myid,
-		kf.followid,jo.first, jo.last,two.company,two.title,three.profimg,kf.new_post
-		FROM
-		k_follow kf
-		join k_joinone jo
-		on
-		kf.followid= jo.email
-		join k_jointwo two
-		on
-		jo.one_id
-		= two.one_id
-		join k_jointhree three
-		on two.two_id = three.two_id
-		where kf.myid = #{id};
-	</select>
+	
 	<select id="listSearchcre" resultType="FollowVO">
 		SELECT
 		fid, myid, followid
 		FROM
 		k_follow where myid = #{keyword2};
 	</select>
-	<select id="getid" resultType="FollowVO">
-		SELECT
-		fid,followid ,myid
-		FROM
-		k_follow
-		where myid=#{id};
-	</select>
-	<delete id="delete" parameterType="FollowVO">
-		delete from k_follow where
-		followid=#{followid} and myid=#{userid};
-	</delete>
+	
+	
 	<select id="followercount" resultType="int">
 		SELECT count(followid)
 		FROM
@@ -350,4 +320,32 @@
 	<update id="flasenewpost">
 		UPDATE k_follow SET new_post = 'false' WHERE followid = #{email} and myid=#{id};
 	</update>
+	 -->
+	<select id="listSearchsearch" resultType="FollowVO">
+		SELECT
+		kf.fid, kf.myid,kf.followid,one.email,one.username,one.profimg
+		FROM
+		k_follow kf join k_joinone one
+		on
+		kf.followid= one.email
+		where 
+		kf.myid = #{id};
+	</select>
+	<select id="getid" resultType="FollowVO">
+		SELECT
+		fid,followid ,myid
+		FROM
+		k_follow
+		where myid=#{id};
+	</select>
+	<insert id="insertfollow" parameterType="FollowVO">
+		INSERT INTO k_follow
+		(myid, followid)
+		VALUES
+		(#{userid},#{followid});
+	</insert>
+	<delete id="delete" parameterType="FollowVO">
+		delete from k_follow where
+		followid=#{followid} and myid=#{userid};
+	</delete>
 </mapper>

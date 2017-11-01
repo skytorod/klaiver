@@ -12,9 +12,6 @@ import com.test.domain.SearchVO;
 public interface SearchDAO {
 
 	public SearchVO search(String keyword) throws Exception;
-	public List<SearchVO> listSearch(SearchCriteria cri) throws Exception;
-	
-	public int listSearchCount(SearchCriteria cri)throws Exception;
 	
 	public K_homeVO search_home(String userid) throws Exception;
 	public K_aboutVO search_about(String userid) throws Exception;
@@ -22,7 +19,24 @@ public interface SearchDAO {
 	public K_contactVO search_contact(String userid) throws Exception;
 	public List<SearchVO> getid(SearchCriteria cri)throws Exception;
 	public List<K_homeVO> search_home_list(String userid) throws Exception;
+	
+	
+	
 	public List<SearchVO> list(SearchCriteria cri)throws Exception;
+	
+	public List<SearchVO> listsolo(SearchCriteria cri) throws Exception;
+	
+	public List<K_productVO> searchproduct(SearchCriteria cri) throws Exception;
+	
+	public List<SearchVO> listSearch(SearchCriteria cri) throws Exception;
+	
+	public int listSearchCount(SearchCriteria cri)throws Exception;
+	
 	public List<K_productVO> listSearchproductCriteria(SearchCriteria cri) throws Exception;
+	
 	public int listSearchproductCount(SearchCriteria cri) throws Exception;
+
+	public int listsoloSearchCount(SearchCriteria cri)throws Exception;
+
+	public List<SearchVO> listsoloSearchCriteria(SearchCriteria cri)throws Exception;
 }
