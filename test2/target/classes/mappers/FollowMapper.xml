@@ -1,0 +1,351 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.test.mapper.FollowMapper">
+	<!-- 
+	<select id="listSearchCriteriaCompany" resultType="FollowVO">
+		SELECT
+		kfc.fcid, kfc.fcmyid, kfc.followcode,kh.pimage,ka.compname_kr,ka.compname_en
+		FROM
+		k_followcompany kfc join k_home kh
+		on
+		kfc.followcode= kh.companyCode
+		join k_about ka
+		on
+		kh.companyCode= ka.companyCode
+		where kfc.fcmyid = #{userid};
+
+	</select>
+	
+	<select id="listSearchcre" resultType="FollowVO">
+		SELECT
+		fid, myid, followid
+		FROM
+		k_follow where myid = #{keyword2};
+	</select>
+	
+	
+	<select id="followercount" resultType="int">
+		SELECT count(followid)
+		FROM
+		k_follow where followid=#{id};
+	</select>
+	<select id="followingcount" resultType="int">
+		SELECT count(myid) FROM
+		k_follow where myid=#{id};
+	</select>
+	<select id="followerComcount" resultType="int">
+		SELECT
+		count(fcmyid) FROM
+		k_followcompany where followcode=#{code};
+	</select>
+	<select id="followingComcount" resultType="int">
+		SELECT count(fcmyid)
+		FROM
+		k_followcompany where fcmyid=#{id};
+	</select>
+	<insert id="insertComfollow" parameterType="FollowVO">
+		INSERT INTO
+		k_followcompany
+		(fcmyid, followcode)
+		VALUES
+		(#{userid},#{followcode});
+	</insert>
+	<select id="getComid" resultType="FollowVO">
+		SELECT
+		fcid,followcode ,fcmyid
+		FROM
+		k_followcompany
+		where fcmyid=#{userid};
+	</select>
+	<delete id="deleteCom" parameterType="FollowVO">
+		delete from k_followcompany
+		where followcode=#{followcode} and fcmyid=#{userid};
+	</delete>
+	<select id="soloViewfollower" resultType="FollowVO">
+		SELECT
+		kf.fid, kf.myid,
+		kf.followid,jo.first, jo.last,two.company,three.profimg
+		FROM
+		k_follow kf
+		join k_joinone jo
+		on
+		kf.myid= jo.email
+		join k_jointwo two
+		on
+		jo.one_id =
+		two.one_id
+		join k_jointhree three
+		on two.two_id = three.two_id
+		where kf.followid= #{email}
+		group by kf.fid asc
+		limit 0,12;
+	</select>
+	<select id="soloViewfollowerScroll" resultType="FollowVO">
+		SELECT
+		kf.fid,
+		kf.myid, kf.followid,jo.first, jo.last,two.company,three.profimg
+		FROM
+		k_follow kf join k_joinone jo
+		on
+		kf.myid= jo.email
+		join k_jointwo two
+		on
+		jo.one_id = two.one_id
+		join k_jointhree three
+		on two.two_id =
+		three.two_id
+		where kf.followid= #{email} and kf.fid > #{fid}
+		group by kf.fid asc
+		limit 0,4;
+	</select>
+	<select id="soloViewfollowing" resultType="FollowVO">
+		SELECT
+		kf.fid, kf.myid,
+		kf.followid,jo.first, jo.last,two.company,three.profimg
+		FROM
+		k_follow kf
+		join k_joinone jo
+		on
+		kf.followid= jo.email
+		join k_jointwo two
+		on
+		jo.one_id
+		= two.one_id
+		join k_jointhree three
+		on two.two_id = three.two_id
+		where kf.myid=#{email}
+		group by kf.fid asc
+		limit 0,12;
+	</select>
+	<select id="soloViewfollowingScroll" resultType="FollowVO">
+		SELECT
+		kf.fid,
+		kf.myid, kf.followid,jo.first, jo.last,two.company,three.profimg
+		FROM
+		k_follow kf join k_joinone jo
+		on
+		kf.followid= jo.email
+		join k_jointwo two
+		on
+		jo.one_id = two.one_id
+		join k_jointhree three
+		on two.two_id =
+		three.two_id
+		where kf.myid=#{email} and kf.fid > #{fid}
+		group by kf.fid asc
+		limit 0,4;
+	</select>
+	<select id="myCompanyfolloer" resultType="FollowVO">
+		SELECT
+		kfc.fcid,
+		kfc.fcmyid, kfc.followcode,jo.first, jo.last,
+		two.company,
+		two.title,three.profimg
+		FROM
+		k_followcompany kfc join k_joinone jo
+		on
+		kfc.fcmyid= jo.email
+		join
+		k_jointwo two
+		on
+		jo.one_id = two.one_id
+		join
+		k_jointhree three
+		on
+		two.two_id = three.two_id
+		where kfc.followcode =#{code}
+		group by kfc.fcid asc
+		limit 0,12;
+	</select>
+	<select id="soloComfollowerScroll" resultType="FollowVO">
+		SELECT
+		kfc.fcid,
+		kfc.fcmyid, kfc.fcfollowid,jo.first, jo.last,
+		two.company,
+		two.title,three.profimg
+		FROM
+		k_followcompany kfc join k_joinone jo
+		on
+		kfc.fcmyid= jo.email
+		join
+		k_jointwo two
+		on
+		jo.one_id = two.one_id
+		join
+		k_jointhree three
+		on
+		two.two_id = three.two_id
+		where kfc.fcfollowid  = #{email} and kfc.fcid> #{fid}
+		group by kfc.fcid asc
+		limit 0,4;
+	</select>
+	<select id="myCompanyfolloing" resultType="FollowVO">
+		SELECT
+		kfc.fcid,
+		kfc.fcmyid, kfc.fcfollowid,jo.first, jo.last,
+		two.company,
+		two.title,three.profimg
+		FROM
+		k_followcompany kfc join k_joinone jo
+		on
+		kfc.fcfollowid= jo.email
+		join
+		k_jointwo two
+		on
+		jo.one_id = two.one_id
+		join
+		k_jointhree three
+		on
+		two.two_id = three.two_id
+		where kfc.fcmyid=#{email}
+		group by kfc.fcid asc
+		limit 0,12;
+	</select>
+	<select id="soloComfollowingScroll" resultType="FollowVO">
+		SELECT
+		kfc.fcid,
+		kfc.fcmyid, kfc.fcfollowid,jo.first, jo.last,
+		two.company,
+		two.title,three.profimg
+		FROM
+		k_followcompany kfc join k_joinone jo
+		on
+		kfc.fcfollowid= jo.email
+		join
+		k_jointwo two
+		on
+		jo.one_id = two.one_id
+		join
+		k_jointhree three
+		on
+		two.two_id = three.two_id
+		where kfc.fcmyid=#{email} and kfc.fcid> #{fid}
+		group by kfc.fcid asc 
+		limit 0,4;
+	</select>
+	<select id="comViewfollower" resultType="FollowVO">
+		SELECT
+		kfc.fcid,
+		kfc.fcmyid, kfc.fcfollowid,jo.first, jo.last,
+		two.company,
+		two.title,three.profimg
+		FROM
+		k_followcompany kfc join k_joinone jo
+		on
+		kfc.fcmyid= jo.email
+		join
+		k_jointwo two
+		on
+		jo.one_id = two.one_id
+		join
+		k_jointhree three
+		on
+		two.two_id = three.two_id
+		where kfc.fcfollowid =#{email}
+		group by kfc.fcid asc
+		limit 0,12;
+	</select>
+	<select id="comViewfollowerScroll" resultType="FollowVO">
+		SELECT
+		kfc.fcid,
+		kfc.fcmyid, kfc.fcfollowid,jo.first, jo.last,
+		two.company,
+		two.title,three.profimg
+		FROM
+		k_followcompany kfc join k_joinone jo
+		on
+		kfc.fcmyid= jo.email
+		join
+		k_jointwo two
+		on
+		jo.one_id = two.one_id
+		join
+		k_jointhree three
+		on
+		two.two_id = three.two_id
+		where kfc.fcfollowid =#{email} and kfc.fcid> #{fid}
+		group by kfc.fcid asc 
+		limit 0,4;
+	</select>
+	<select id="comViewfollowing" resultType="FollowVO">
+		SELECT
+		kfc.fcid,
+		kfc.fcmyid, kfc.fcfollowid,jo.first, jo.last,
+		two.company,
+		two.title,three.profimg
+		FROM
+		k_followcompany kfc join k_joinone jo
+		on
+		kfc.fcfollowid= jo.email
+		join
+		k_jointwo two
+		on
+		jo.one_id = two.one_id
+		join
+		k_jointhree three
+		on
+		two.two_id = three.two_id
+		where kfc.fcmyid=#{email}
+		group by kfc.fcid asc
+		limit 0,12;
+	</select>
+	<select id="comViewfollowingScroll" resultType="FollowVO">
+		SELECT
+		kfc.fcid,
+		kfc.fcmyid, kfc.fcfollowid,jo.first, jo.last,
+		two.company,
+		two.title,three.profimg
+		FROM
+		k_followcompany kfc join k_joinone jo
+		on
+		kfc.fcfollowid= jo.email
+		join
+		k_jointwo two
+		on
+		jo.one_id = two.one_id
+		join
+		k_jointhree three
+		on
+		two.two_id = three.two_id
+		where kfc.fcmyid=#{email} and kfc.fcid> #{fid}
+		group by kfc.fcid asc 
+		limit 0,4;
+	</select>
+	<update id="newpost">
+		UPDATE k_follow SET new_post = 'true' WHERE followid = #{id};
+	</update>
+	<update id="flasenewpost">
+		UPDATE k_follow SET new_post = 'false' WHERE followid = #{email} and myid=#{id};
+	</update>
+	 -->
+	<select id="listSearchsearch" resultType="FollowVO">
+		SELECT
+		kf.fid, kf.myid,kf.followid,one.email,one.username,one.profimg
+		FROM
+		k_follow kf join k_joinone one
+		on
+		kf.followid= one.email
+		where 
+		kf.myid = #{id};
+	</select>
+	<select id="getid" resultType="FollowVO">
+		SELECT
+		fid,followid ,myid
+		FROM
+		k_follow
+		where myid=#{id};
+	</select>
+	<insert id="insertfollow" parameterType="FollowVO">
+		INSERT INTO k_follow
+		(myid, followid)
+		VALUES
+		(#{userid},#{followid});
+	</insert>
+	<delete id="delete" parameterType="FollowVO">
+		delete from k_follow where
+		followid=#{followid} and myid=#{userid};
+	</delete>
+</mapper>

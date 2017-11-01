@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.klaiverjoin.mappers.ReplyMapper">
+	<insert id="replyinsert">
+		INSERT
+		INTO
+		k_reply
+		(rid, boardid, replytext, rep_userid, rep_regdate)
+		VALUES
+		(#{rid}, #{boardid}, #{replytext}, #{rep_userid}, now())
+
+	</insert>
+	<select id="replylist" resultType="ReplyVO">
+		select
+		kr.rid,kr.boardid,kr.replytext,kr.rep_userid,kr.rep_regdate,
+		one.first,one.last,two.company,three.profimg
+		from k_reply kr join k_joinone one
+		on kr.rep_userid = one.email
+		join k_jointwo two
+		on one.one_id = two.one_id
+		join k_jointhree three
+			on two.two_id = three.two_id
+		where kr.boardid = #{sbid} ORDER by kr.rid asc;
+	</select>
+	<insert id="re_replyinsert">
+		INSERT
+		INTO
+		k_re_reply
+		(reid, re_rid, re_boardid, re_replytext, re_rep_userid, re_rep_regdate)
+		VALUES
+		(#{reid}, #{re_rid}, #{re_boardid}, #{re_replytext}, #{re_rep_userid}, now())
+
+	</insert> 
+	<select id="getReplyupdate" resultType="ReplyVO">
+		select
+		kr.rid,kr.boardid,kr.replytext,kr.rep_userid,kr.rep_regdate,
+		one.first,one.last,two.company
+		from k_reply kr join k_joinone one
+		on kr.rep_userid = one.email
+		join k_jointwo two
+		on one.one_id = two.one_id
+		where kr.rid = #{rid};
+	</select>
+	<update id="updaterep" parameterType="ReplyVO">
+		UPDATE
+			k_reply
+		SET
+		replytext = #{replytext},
+		rep_regdate = now()
+		WHERE
+		rid = #{r_id};
+	</update>
+	<delete id="replyremove">
+		delete from k_reply where `rid`=#{rid}
+	</delete>
+</mapper>

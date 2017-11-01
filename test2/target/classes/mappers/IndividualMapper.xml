@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.klaiverjoin.mappers.IndividualMapper">
+
+	<select id="soloView" resultType="IndividualVO">
+		select one.one_id,one.first,
+		one.last, one.email, one.password,
+		two.one_id,two.company, two.title,
+		two.industry, two.one_id,
+		three.three_id, three.country,
+		three.city,three.introduce,three.profimg,
+		three.two_id
+		from k_joinone one join
+		k_jointwo two
+		on one.one_id = two.one_id
+		join k_jointhree three
+		on
+		two.two_id = three.two_id
+		where one.email = #{email};
+	</select>
+	<update id="introduceinsert" parameterType="IndividualVO">
+		UPDATE
+		k_joinone one join
+		k_jointwo two
+		on one.one_id =
+		two.one_id
+		join k_jointhree three
+		on
+		two.two_id = three.two_id
+		SET
+		three.introduce = #{introduce}
+		WHERE
+		one.email = #{email};
+	</update>
+	<update id="introduceupdate">
+		UPDATE
+			k_joinone one join	k_jointwo two
+			on one.one_id = two.one_id
+			join k_jointhree three
+			on two.two_id = three.two_id
+		SET
+		one.first = #{first},
+		one.last = #{last},
+		two.company = #{company},
+		 two.title = #{title},
+		two.industry = #{industry},
+		 three.country = #{country},
+		three.city = #{city},
+		three.introduce = #{introduce},
+		three.profimg = #{profimg}
+		WHERE
+		one.email = #{email};
+	</update>
+	<select id="listSearch" resultType="IndividualVO">
+		select
+			 one.first, one.last, one.email,two.company, two.title,
+			 two.industry,three.profimg, three.country,three.city
+		from 
+			k_joinone one join k_jointwo two
+		on
+		    one.one_id = two.one_id
+		join k_jointhree three
+			on
+		two.two_id = three.two_id
+			where
+		one.first LIKE	CONCAT('%', #{keyword}, '%') or one.last LIKE	CONCAT('%', #{keyword}, '%') 
+		or one.email LIKE	CONCAT('%', #{keyword}, '%') or two.company LIKE	CONCAT('%', #{keyword}, '%') 
+		or two.title LIKE	CONCAT('%', #{keyword}, '%') or two.industry LIKE	CONCAT('%', #{keyword}, '%') 
+		or one.email LIKE	CONCAT('%', #{keyword}, '%') or three.profimg LIKE	CONCAT('%', #{keyword}, '%') 
+		or three.country LIKE	CONCAT('%', #{keyword}, '%') or three.city LIKE	CONCAT('%', #{keyword}, '%') 
+		limit #{pageStart},#{perPageNum};
+
+	</select>
+	<select id="listSearchCount" resultType="int">
+		SELECT count(*) FROM 
+		 k_joinone one join
+		k_jointwo two
+		on one.one_id = two.one_id
+		join k_jointhree three
+		on
+		two.two_id = three.two_id
+			where
+		one.first LIKE	CONCAT('%', #{keyword}, '%') or one.last LIKE	CONCAT('%', #{keyword}, '%') 
+		or one.email LIKE	CONCAT('%', #{keyword}, '%') or two.company LIKE	CONCAT('%', #{keyword}, '%') 
+		or two.title LIKE	CONCAT('%', #{keyword}, '%') or two.industry LIKE	CONCAT('%', #{keyword}, '%') 
+		or one.email LIKE	CONCAT('%', #{keyword}, '%') or three.profimg LIKE	CONCAT('%', #{keyword}, '%') 
+		or three.country LIKE	CONCAT('%', #{keyword}, '%') or three.city LIKE	CONCAT('%', #{keyword}, '%') 
+	</select>
+	<select id="getsessionimg" resultType="IndividualVO">
+		select
+			  three.profimg
+		from 
+			k_joinone one join k_jointwo two
+		on
+		    one.one_id = two.one_id
+		join k_jointhree three
+			on
+		two.two_id = three.two_id
+			where
+	   	email=#{id};
+
+	</select>
+	<update id="delimg" parameterType="IndividualVO">
+		UPDATE k_jointhree 
+		set
+		profimg = 'noimg.jpg'
+			where
+		three_id = #{three};
+	</update>
+	<select id="listsolo" resultType="IndividualVO">
+		select
+			 one.first, one.last, one.email,two.company, two.title,
+			 two.industry,three.profimg, three.country,three.city
+		from 
+			k_joinone one join k_jointwo two
+		on
+		    one.one_id = two.one_id
+		join k_jointhree three
+			on
+		two.two_id = three.two_id
+			where
+		one.first LIKE	CONCAT('%', #{keyword}, '%') or one.last LIKE	CONCAT('%', #{keyword}, '%') 
+		or one.email LIKE	CONCAT('%', #{keyword}, '%') or two.company LIKE	CONCAT('%', #{keyword}, '%') 
+		or two.title LIKE	CONCAT('%', #{keyword}, '%') or two.industry LIKE	CONCAT('%', #{keyword}, '%') 
+		or one.email LIKE	CONCAT('%', #{keyword}, '%') or three.profimg LIKE	CONCAT('%', #{keyword}, '%') 
+		or three.country LIKE	CONCAT('%', #{keyword}, '%') or three.city LIKE	CONCAT('%', #{keyword}, '%') 
+		limit 0,5;
+
+	</select>
+	<update id="updatepost" parameterType="IndividualVO">
+		UPDATE k_board 
+		set
+		bnew_post = 'false'
+			where
+		warea = #{id} and bnew_post ='true';
+	</update>
+</mapper>

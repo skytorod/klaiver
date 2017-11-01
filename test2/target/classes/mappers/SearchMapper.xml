@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.test.mapper.SearchMapper">
+	<!-- <select id="getid" resultType="SearchVO">
+		SELECT kh.companyCode FROM
+		k_home kh JOIN k_about ka
+		ON kh.companyCode = ka.companyCode
+		join k_product kp
+		on ka.companyCode = kp.companyCode
+		join k_contact kc
+		on kp.companyCode = kc.companyCode
+		where  
+		kh.companyCode LIKE CONCAT('%', #{keyword}, '%') or kh.hashtag LIKE
+		CONCAT('%', #{keyword}, '%')
+		or kh.hashtag LIKE CONCAT('%', #{keyword}, '%')or ka.compname_kr LIKE
+		CONCAT('%', #{keyword}, '%')
+		or ka.compname_en LIKE CONCAT('%', #{keyword}, '%')or ka.businessType
+		LIKE CONCAT('%', #{keyword}, '%')
+		or ka.repname LIKE CONCAT('%', #{keyword}, '%')or ka.businessname LIKE
+		CONCAT('%', #{keyword}, '%')
+		or ka.main_product LIKE CONCAT('%', #{keyword}, '%')or ka.establish LIKE
+		CONCAT('%', #{keyword}, '%')
+		or ka.employees LIKE CONCAT('%', #{keyword}, '%')or ka.homepage LIKE
+		CONCAT('%', #{keyword}, '%')
+		or ka.address LIKE CONCAT('%', #{keyword}, '%')or ka.phonenumber LIKE
+		CONCAT('%', #{keyword}, '%')
+		or ka.fax LIKE CONCAT('%', #{keyword}, '%')or businessStatus LIKE
+		CONCAT('%', #{keyword}, '%')
+		or ka.take LIKE CONCAT('%', #{keyword}, '%')or ka.capital LIKE
+		CONCAT('%', #{keyword}, '%')
+		or ka.netincome LIKE CONCAT('%', #{keyword}, '%')or
+		ka.certificationStatus LIKE CONCAT('%', #{keyword}, '%')
+		or kp.product1 LIKE CONCAT('%', #{keyword}, '%')or kp.product2 LIKE
+		CONCAT('%', #{keyword}, '%')
+		or kp.product3 LIKE CONCAT('%', #{keyword}, '%')or kp.product4 LIKE
+		CONCAT('%', #{keyword}, '%')
+		or kp.product5 LIKE CONCAT('%', #{keyword}, '%')or kp.product6 LIKE
+		CONCAT('%', #{keyword}, '%')
+		or kp.product7 LIKE CONCAT('%', #{keyword}, '%')or kp.product8 LIKE
+		CONCAT('%', #{keyword}, '%')
+		or kp.product9 LIKE CONCAT('%', #{keyword}, '%')or kp.product10 LIKE
+		CONCAT('%', #{keyword}, '%')
+		or kp.usage1 LIKE CONCAT('%', #{keyword}, '%')or kp.usage2 LIKE
+		CONCAT('%', #{keyword}, '%')
+		or kp.usage3 LIKE CONCAT('%', #{keyword}, '%')or kp.usage4 LIKE
+		CONCAT('%', #{keyword}, '%')
+		or kp.usage5 LIKE CONCAT('%', #{keyword}, '%')or kp.usage6 LIKE
+		CONCAT('%', #{keyword}, '%')
+		or kp.usage7 LIKE CONCAT('%', #{keyword}, '%')or kp.usage8 LIKE
+		CONCAT('%', #{keyword}, '%')
+		or kp.usage9 LIKE CONCAT('%', #{keyword}, '%')or kp.usage10 LIKE
+		CONCAT('%', #{keyword}, '%')
+		or kp.pcod1 LIKE CONCAT('%', #{keyword}, '%')or kp.pcod2 LIKE
+		CONCAT('%', #{keyword}, '%')
+		or kp.pcod3 LIKE CONCAT('%', #{keyword},
+		'%')or kp.pcod4 LIKE CONCAT('%', #{keyword}, '%')
+		or kp.pcod5 LIKE CONCAT('%', #{keyword}, '%')or kp.pcod6 LIKE
+		CONCAT('%', #{keyword}, '%')
+		or kp.pcod7 LIKE CONCAT('%', #{keyword}, '%')or kp.pcod8 LIKE
+		CONCAT('%', #{keyword}, '%')
+		or kp.pcod9 LIKE CONCAT('%', #{keyword}, '%')or kp.pcod10 LIKE
+		CONCAT('%', #{keyword}, '%')
+		or kc.phonenumber LIKE CONCAT('%', #{keyword}, '%')or kc.fax LIKE
+		CONCAT('%', #{keyword}, '%')
+		or kc.email LIKE CONCAT('%', #{keyword}, '%')or kc.address LIKE
+		CONCAT('%', #{keyword}, '%') ORDER BY
+		kh.hid DESC
+	</select>
+	<select id="search" resultType="SearchVO">
+				SELECT one.username,
+		ka.compname_kr, ka.compname_en,
+		ka.businessType, ka.repname,
+		ka.businessname,ka.main_product,
+		ka.establish, ka.employees, ka.homepage, ka.businessStatus,
+		ka.take, ka.capital, ka.netincome,
+		ka.certificationStatus,ka.AboutUs, kp.product, kp.product_en,
+		kp.usage,
+		kp.pcod, kc.phonenumber, kc.fax,
+		kc.email, kc.address, kc.organizationChart
+		FROM
+		k_joinone one JOIN k_about ka
+		ON one.email = ka.userid
+		join k_product kp
+		on ka.userid = kp.userid
+		join k_contact kc
+		on kp.userid = kc.userid
+		where  
+		one.username LIKE CONCAT('%', #{keyword}, '%')  or ka.compname_kr LIKE CONCAT('%', #{keyword}, '%')
+		or ka.compname_en LIKE CONCAT('%', #{keyword}, '%')or ka.businessType LIKE CONCAT('%', #{keyword}, '%')
+		or ka.repname LIKE CONCAT('%', #{keyword}, '%')or ka.businessname LIKE CONCAT('%', #{keyword}, '%')
+		or ka.main_product LIKE CONCAT('%', #{keyword}, '%')or ka.establish LIKE CONCAT('%', #{keyword}, '%')
+		or ka.employees LIKE CONCAT('%', #{keyword}, '%')or ka.homepage LIKE CONCAT('%', #{keyword}, '%')
+		or ka.businessStatus LIKE CONCAT('%', #{keyword}, '%')or ka.take LIKE CONCAT('%', #{keyword}, '%')
+		or ka.capital LIKE CONCAT('%', #{keyword}, '%')or ka.netincome LIKE CONCAT('%', #{keyword}, '%')
+		or ka.certificationStatus LIKE CONCAT('%', #{keyword}, '%')or ka.AboutUs LIKE CONCAT('%', #{keyword}, '%')
+		or kp.product LIKE CONCAT('%', #{keyword}, '%')or kp.product_en LIKE CONCAT('%', #{keyword}, '%')
+		or kp.usage LIKE CONCAT('%', #{keyword}, '%')or kp.pcod LIKE CONCAT('%', #{keyword}, '%')
+		or kc.phonenumber LIKE CONCAT('%', #{keyword}, '%')or kc.fax LIKE CONCAT('%', #{keyword}, '%')
+		or kc.email LIKE CONCAT('%', #{keyword}, '%')or kc.address LIKE CONCAT('%', #{keyword}, '%')
+		or kc.organizationChart LIKE CONCAT('%', #{keyword}, '%')
+	</select>
+	
+	<select id="search_home_list" resultType="K_homeVO">
+		SELECT
+		`hid`, `companyCode`,
+		`hashtag`, `companyimg`,`pimage`, `introduce`, `country`
+		FROM
+		`k_home`
+		WHERE
+		`companyCode`=#{code};
+	</select>
+	<select id="search_home" resultType="K_homeVO">
+		SELECT
+		`hid`, `companyCode`,
+		`hashtag`, `companyimg`,`pimage`, `introduce`, `country`
+		FROM
+		`k_home`
+		WHERE
+		`companyCode`=#{code};
+	</select>
+	<select id="search_about" resultType="K_aboutVO">
+		SELECT
+		`aid`, `companyCode`,
+		`compname_kr`, `compname_en`, `businessType`, `repname`,
+		`businessname`,`main_product`, `establish`, `employees`, `homepage`,
+		`address`,
+		`phonenumber`, `fax`,`businessStatus`, `take`, `capital`,
+		`netincome`,
+		`certificationStatus`, `AboutUs`
+		FROM
+		`k_about`
+		WHERE
+		`companyCode`=#{code};
+	</select>
+	<select id="search_product" resultType="K_productVO">
+		SELECT
+		`pid`,`companyCode`,
+		`image`,
+		`product`,`product_en`,
+		`usage`,
+		`pcod`,
+		`pinfo`
+		FROM
+		`k_product`
+		WHERE
+		`companyCode`=#{code};
+	</select>
+	<select id="search_contact" resultType="K_contactVO">
+		SELECT
+		`cid`, `companyCode`,
+		`phonenumber`, `fax`, `email`, `address`,
+		`organizationChart`
+		FROM
+		`k_contact`
+		WHERE
+		`companyCode`=#{code};
+	</select>
+	 -->
+	<select id="list" resultType="SearchVO">
+		SELECT one.username,one.email,one.profimg,
+		ka.compname_kr, ka.compname_en,
+		ka.businessType, ka.repname,
+		ka.businessname,ka.main_product,
+		ka.establish, ka.employees, ka.homepage, ka.businessStatus,
+		ka.take, ka.capital, ka.netincome,
+		ka.certificationStatus,ka.AboutUs, kp.product, kp.product_en,
+		kp.usage,
+		kp.pcod, kc.phonenumber, kc.fax,
+		kc.cemail, kc.address, kc.organizationChart
+		FROM
+		k_joinone one JOIN k_about ka
+		ON one.email = ka.userid
+		join k_product kp
+		on ka.userid = kp.userid
+		join k_contact kc
+		on kp.userid = kc.userid
+		where  
+		one.username LIKE CONCAT('%', #{keyword}, '%') or one.email LIKE CONCAT('%', #{keyword}, '%') 
+		or ka.compname_kr LIKE CONCAT('%', #{keyword}, '%')
+		or ka.compname_en LIKE CONCAT('%', #{keyword}, '%')or ka.businessType LIKE CONCAT('%', #{keyword}, '%')
+		or ka.repname LIKE CONCAT('%', #{keyword}, '%')or ka.businessname LIKE CONCAT('%', #{keyword}, '%')
+		or ka.main_product LIKE CONCAT('%', #{keyword}, '%')or ka.establish LIKE CONCAT('%', #{keyword}, '%')
+		or ka.employees LIKE CONCAT('%', #{keyword}, '%')or ka.homepage LIKE CONCAT('%', #{keyword}, '%')
+		or ka.businessStatus LIKE CONCAT('%', #{keyword}, '%')or ka.take LIKE CONCAT('%', #{keyword}, '%')
+		or ka.capital LIKE CONCAT('%', #{keyword}, '%')or ka.netincome LIKE CONCAT('%', #{keyword}, '%')
+		or ka.certificationStatus LIKE CONCAT('%', #{keyword}, '%')or ka.AboutUs LIKE CONCAT('%', #{keyword}, '%')
+		or kp.product LIKE CONCAT('%', #{keyword}, '%')or kp.product_en LIKE CONCAT('%', #{keyword}, '%')
+		or kp.usage LIKE CONCAT('%', #{keyword}, '%')or kp.pcod LIKE CONCAT('%', #{keyword}, '%')
+		or kc.phonenumber LIKE CONCAT('%', #{keyword}, '%')or kc.fax LIKE CONCAT('%', #{keyword}, '%')
+		or kc.cemail LIKE CONCAT('%', #{keyword}, '%')or kc.address LIKE CONCAT('%', #{keyword}, '%')
+		or kc.organizationChart LIKE CONCAT('%', #{keyword}, '%')
+		GROUP BY one.one_id DESC
+		limit 0,5 ;
+	</select>
+	<select id="listsolo" resultType="SearchVO">
+	SELECT email,username,profimg
+		FROM
+		k_joinone 
+		where  
+		username LIKE CONCAT('%', #{keyword}, '%') or email LIKE CONCAT('%', #{keyword}, '%') 
+		GROUP BY  one_id DESC
+		limit 0,5 ;
+	</select>
+	<select id="searchproduct" resultType="K_productVO">
+	select 
+		pid,userid,image,product,product_en,`usage`,pcod ,pinfo
+		from 
+		k_product 
+		where 
+		product LIKE CONCAT('%', #{keyword}, '%') or product_en LIKE CONCAT('%', #{keyword}, '%') 
+		or `usage` LIKE CONCAT('%', #{keyword}, '%') or pcod LIKE CONCAT('%', #{keyword}, '%') 
+		or pinfo LIKE CONCAT('%', #{keyword}, '%') 
+		GROUP BY  pid DESC
+		limit 0,5 ;
+	</select>
+	<select id="listSearch" resultType="SearchVO">
+		SELECT one.username,one.email,one.profimg,
+		ka.compname_kr, ka.compname_en,
+		ka.businessType, ka.repname,
+		ka.businessname,ka.main_product,
+		ka.establish, ka.employees, ka.homepage, ka.businessStatus,
+		ka.take, ka.capital, ka.netincome,
+		ka.certificationStatus,ka.AboutUs, kp.product, kp.product_en,
+		kp.usage,
+		kp.pcod, kc.phonenumber, kc.fax,
+		kc.cemail, kc.address, kc.organizationChart
+		FROM
+		k_joinone one JOIN k_about ka
+		ON one.email = ka.userid
+		join k_product kp
+		on ka.userid = kp.userid
+		join k_contact kc
+		on kp.userid = kc.userid
+		where  
+		one.username LIKE CONCAT('%', #{keyword}, '%') or one.email LIKE CONCAT('%', #{keyword}, '%') 
+		or ka.compname_kr LIKE CONCAT('%', #{keyword}, '%')
+		or ka.compname_en LIKE CONCAT('%', #{keyword}, '%')or ka.businessType LIKE CONCAT('%', #{keyword}, '%')
+		or ka.repname LIKE CONCAT('%', #{keyword}, '%')or ka.businessname LIKE CONCAT('%', #{keyword}, '%')
+		or ka.main_product LIKE CONCAT('%', #{keyword}, '%')or ka.establish LIKE CONCAT('%', #{keyword}, '%')
+		or ka.employees LIKE CONCAT('%', #{keyword}, '%')or ka.homepage LIKE CONCAT('%', #{keyword}, '%')
+		or ka.businessStatus LIKE CONCAT('%', #{keyword}, '%')or ka.take LIKE CONCAT('%', #{keyword}, '%')
+		or ka.capital LIKE CONCAT('%', #{keyword}, '%')or ka.netincome LIKE CONCAT('%', #{keyword}, '%')
+		or ka.certificationStatus LIKE CONCAT('%', #{keyword}, '%')or ka.AboutUs LIKE CONCAT('%', #{keyword}, '%')
+		or kp.product LIKE CONCAT('%', #{keyword}, '%')or kp.product_en LIKE CONCAT('%', #{keyword}, '%')
+		or kp.usage LIKE CONCAT('%', #{keyword}, '%')or kp.pcod LIKE CONCAT('%', #{keyword}, '%')
+		or kc.phonenumber LIKE CONCAT('%', #{keyword}, '%')or kc.fax LIKE CONCAT('%', #{keyword}, '%')
+		or kc.cemail LIKE CONCAT('%', #{keyword}, '%')or kc.address LIKE CONCAT('%', #{keyword}, '%')
+		or kc.organizationChart LIKE CONCAT('%', #{keyword}, '%')
+		GROUP BY one.one_id DESC
+		limit #{pageStart},#{perPageNum} ;
+
+	</select>
+	<select id="listSearchCount" resultType="int">
+		SELECT count(distinct one.username)  FROM
+		k_joinone one JOIN k_about ka
+		ON one.email = ka.userid
+		join k_product kp
+		on ka.userid = kp.userid
+		join k_contact kc
+		on kp.userid = kc.userid
+		where  
+		one.username LIKE CONCAT('%', #{keyword}, '%') or one.email LIKE CONCAT('%', #{keyword}, '%') 
+		or ka.compname_kr LIKE CONCAT('%', #{keyword}, '%')
+		or ka.compname_en LIKE CONCAT('%', #{keyword}, '%')or ka.businessType LIKE CONCAT('%', #{keyword}, '%')
+		or ka.repname LIKE CONCAT('%', #{keyword}, '%')or ka.businessname LIKE CONCAT('%', #{keyword}, '%')
+		or ka.main_product LIKE CONCAT('%', #{keyword}, '%')or ka.establish LIKE CONCAT('%', #{keyword}, '%')
+		or ka.employees LIKE CONCAT('%', #{keyword}, '%')or ka.homepage LIKE CONCAT('%', #{keyword}, '%')
+		or ka.businessStatus LIKE CONCAT('%', #{keyword}, '%')or ka.take LIKE CONCAT('%', #{keyword}, '%')
+		or ka.capital LIKE CONCAT('%', #{keyword}, '%')or ka.netincome LIKE CONCAT('%', #{keyword}, '%')
+		or ka.certificationStatus LIKE CONCAT('%', #{keyword}, '%')or ka.AboutUs LIKE CONCAT('%', #{keyword}, '%')
+		or kp.product LIKE CONCAT('%', #{keyword}, '%')or kp.product_en LIKE CONCAT('%', #{keyword}, '%')
+		or kp.usage LIKE CONCAT('%', #{keyword}, '%')or kp.pcod LIKE CONCAT('%', #{keyword}, '%')
+		or kc.phonenumber LIKE CONCAT('%', #{keyword}, '%')or kc.fax LIKE CONCAT('%', #{keyword}, '%')
+		or kc.cemail LIKE CONCAT('%', #{keyword}, '%')or kc.address LIKE CONCAT('%', #{keyword}, '%')
+		or kc.organizationChart LIKE CONCAT('%', #{keyword}, '%');
+	</select>
+	<select id="listSearchproductCriteria" resultType="K_productVO">
+	select 
+		pid,userid,image,product,product_en,`usage`,pcod ,pinfo
+		from 
+		k_product 
+		where 
+		product LIKE CONCAT('%', #{keyword}, '%') or product_en LIKE CONCAT('%', #{keyword}, '%') 
+		or `usage` LIKE CONCAT('%', #{keyword}, '%') or pcod LIKE CONCAT('%', #{keyword}, '%') 
+		or pinfo LIKE CONCAT('%', #{keyword}, '%') 
+		GROUP BY  pid DESC
+		limit #{pageStart},#{perPageNum} ;
+	</select>
+	<select id="listSearchproductCount" resultType="int">
+		select 
+		count(distinct pid)
+		from 
+		k_product 
+		where 
+		product LIKE CONCAT('%', #{keyword}, '%') or product_en LIKE CONCAT('%', #{keyword}, '%') 
+		or `usage` LIKE CONCAT('%', #{keyword}, '%') or pcod LIKE CONCAT('%', #{keyword}, '%')
+		or pinfo LIKE CONCAT('%', #{keyword}, '%')  ;
+	</select>  
+	<select id="listsoloSearchCriteria" resultType="SearchVO">
+	SELECT email,username,profimg
+		FROM
+		k_joinone 
+		where  
+		username LIKE CONCAT('%', #{keyword}, '%') or email LIKE CONCAT('%', #{keyword}, '%') 
+		GROUP BY  one_id DESC
+		limit #{pageStart},#{perPageNum};
+	</select>
+	<select id="listsoloSearchCount" resultType="int">
+	SELECT
+		count(distinct one_id)
+		FROM
+		k_joinone 
+		where  
+		username LIKE CONCAT('%', #{keyword}, '%') or email LIKE CONCAT('%', #{keyword}, '%');
+	</select>
+</mapper>
