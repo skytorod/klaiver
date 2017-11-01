@@ -61,7 +61,7 @@
 	}
 	function myComfollowing(email) {
 		var email = email;
-		var popUrl = "../member/comViewfollowing?email=" + email;
+		var popUrl = "../member/soloComfollowing?email=" + email;
 		var windowW = 400; // 창의 가로 길이
 		var windowH = 400; // 창의 세로 길이
 		var left = Math.ceil((window.screen.width - windowW) / 2);
@@ -94,10 +94,10 @@
 																.replace(
 																		regExp,
 																		"");
-														document.location.href = "../search/list?keyword="
+														document.location.href = "../search/alllist?keyword="
 																+ keyword;
 													} else {
-														document.location.href = "../search/list?keyword="
+														document.location.href = "../search/alllist?keyword="
 																+ str;
 													}
 
@@ -119,10 +119,10 @@
 												if (regExp.test(str)) {
 													var keyword = str.replace(
 															regExp, "");
-													document.location.href = "../search/list?keyword="
+													document.location.href = "../search/alllist?keyword="
 															+ keyword;
 												} else {
-													document.location.href = "../search/list?keyword="
+													document.location.href = "../search/alllist?keyword="
 															+ str;
 												}
 												return false;
@@ -130,23 +130,6 @@
 												alert("검색어를 입력하세요");
 												return false;
 											}
-										});
-					});
-</script>
-<script>
-	$(document)
-			.ready(
-					function() {
-						$("#message")
-								.click(
-										function() {
-											var email = $("#userids").val();
-											var popUrl = "../notes/fsender?email="
-													+ email;
-											var popOption = "width=1000, height=360, resizable=no,location=no, scrollbars=no, status=yes;";
-											window.open(popUrl, "보내는page",
-													popOption);
-											window.close();
 										});
 					});
 </script>
@@ -173,10 +156,9 @@
 		</form>
 		<ul id="icon">
 			<li class="icon1"><a
-				href="../member/individual?keyword=${sessionScope.login}">
-					<div class="cover"></div> <img src="../resources/images/icon1.png"
-					alt="개인페이지" /> <c:if test="${fn:length(updatenewpost) ne 0}">new</c:if>
-			</a></li>
+				href="../cboard/news?userid=${sessionScope.login}"><div
+						class="cover"></div> <img src="../resources/images/icon1.png"
+					alt="개인페이지" /> </a></li>
 			<li class="icon2"><a
 				href="../cboard/companylist?userid=${sessionScope.login}"><div
 						class="cover"></div> <img src="../resources/images/icon2.png"
@@ -197,45 +179,60 @@
 
 			<div id="company_profile">
 				<div id="company_img">
-
-					<img src="../resources/img/${k_homeVO.pimage}"
-						onclick="doImgPop('../resources/img/${k_homeVO.pimage}')" />
+					<c:forEach items="${IndividualVO}" var="IndividualVO">
+						<img src="../resources/img/${IndividualVO.profimg}"
+							onclick="doImgPop('../resources/img/${IndividualVO.profimg}')" />
+					</c:forEach>
 				</div>
 				<!--기업프로필이미지-->
+				<c:forEach items="${IndividualVO}" var="IndividualVO">
 				<div id="company_info">
 					<!--기업정보-->
-					<div id="company_name">${k_aboutVO.compname_kr}</div>
-					<div id="company_type">${k_aboutVO.businessname}</div>
-					<div id="company_loc">${k_homeVO.country}</div>
-
-					<ul id="page_move">
-						<!--페이지 이동-->
-						<li><a href="searchNews?code=${k_aboutVO.companyCode}">News</a></li>
-						<li><a href="search_home?code=${k_aboutVO.companyCode}">Home</a></li>
-						<li class="on"><a
-							href="search_about?code=${k_aboutVO.companyCode}">About</a></li>
-						<li><a href="search_product?code=${k_aboutVO.companyCode}">Product</a></li>
-						<li><a href="search_contact?code=${k_aboutVO.companyCode}">Contact</a></li>
-					</ul>
+					
+						<div id="individual_name">
+							<c:if test="${k_aboutVO eq null && k_contactVO eq null}">${IndividualVO.email}<br>${IndividualVO.username}<br>
+								<br>
+							</c:if>
+							<c:if test="${k_aboutVO ne null || k_contactVO ne null}">
+						${k_aboutVO.compname_kr}<br>
+						${k_aboutVO.compname_en}<br>
+						${k_contactVO.address}
+						</c:if>
+						</div>
+						<ul id="page_move">
+							<li><a href="searchNews?userid=${IndividualVO.email}">Home</a></li>
+							<li class="on"><a
+								href="check_about?userid=${IndividualVO.email}">About</a></li>
+							<li><a href="search_product?userid=${IndividualVO.email}">Product</a></li>
+							<li><a href="check_contact?userid=${IndividualVO.email}">Contact</a></li>
+						</ul>
+					
 				</div>
 				<div id="commu">
 					<div id="follow_btn">
-						<c:if test="${k_aboutVO.flag eq true}">
+						<c:if test="${IndividualVO.flag eq true}">
 							<button id="follow" name="follow"
-								onclick="location.href='../follow/deleteCom?userid=${sessionScope.login}&followcode=${k_homeVO.companyCode}'">Following</button>
+								onclick="location.href='../follow/delete?userid=${sessionScope.login}&followid=${IndividualVO.email}'">Following</button>
 						</c:if>
-						<c:if test="${k_aboutVO.flag eq false}">
+						<c:if test="${IndividualVO.flag eq false}">
 							<button id="follow" name="follow"
-								onclick="location.href='../follow/insertComFollow?userid=${sessionScope.login}&followcode=${k_homeVO.companyCode}'">Follow</button>
+								onclick="location.href='../follow/insertFollow?userid=${sessionScope.login}&followid=${IndividualVO.email}'">Follow</button>
 						</c:if>
 						<button type="submit" id="message" name="message">Message</button>
 					</div>
 				</div>
+				</c:forEach>
 				<div id="follow_num_home1">
 					<!--팔로워/팔로잉-->
 					<p>
-						회사 팔로워 <span id="follower_num_home"><a href="#"
-							onclick="myComfollower('${k_homeVO.companyCode}');">${followerComcount}</a></span>명
+						팔로워 <span id="follower_num_home"> <a href="#"
+							onclick="viewfollower('');">${followercount}</a>
+						</span>
+					</p>
+					<p>
+						팔로잉 <span id="following_num_home"> <a href="#"
+							onclick="viewfollowing('');">${followingcount}</a>
+						</span>
 					</p>
 				</div>
 
@@ -243,91 +240,71 @@
 
 			<!----기업 콘텐츠---->
 			<div id="contents_wrap">
-				<p>기업정보</p>
-				<div>
-					<table>
-						<tr>
-							<td class="list">기업명</td>
-							<td class="data"><span id="corporate_form">${k_aboutVO.compname_kr}</span></td>
+					<p>기업정보</p>
+					<div>
+						<table>
+							<tr>
+								<td class="list">기업명</td>
+								<td class="data"><span id="corporate_form">${k_aboutVO.compname_kr}</span></td>
+							</tr>
+							<tr>
+								<td class="list">영문기업명</td>
+								<td class="data"><span id="corporate_form">${k_aboutVO.compname_en}</span></td>
+							</tr>
+							<tr>
+								<td class="list">기업형태</td>
+								<td class="data"><span id="corporate_form">${k_aboutVO.businessType}</span></td>
+							</tr>
+							<tr>
+								<td class="list">대표자명</td>
+								<td class="data"><span id="owner_name">${k_aboutVO.repname}</span></td>
+							</tr>
+							<tr>
+								<td class="list">업종명</td>
+								<td class="data"><span id="business_type">${k_aboutVO.businessname}</span></td>
+							</tr>
+							<tr>
+								<td class="list">주요상품</td>
+								<td class="data"><span id="product">${k_aboutVO.main_product}</span></td>
+							</tr>
+							<tr>
+								<td class="list">인증현황</td>
+								<td class="data"><span id="certified">${k_aboutVO.certificationStatus}</span></td>
+							</tr>
+							<tr>
+								<td class="list">종업원 수</td>
+								<td class="data"><span id="staff">${k_aboutVO.employees}
+										명</span></td>
+							</tr>
+							<tr>
+								<td class="list">사업장 현황</td>
+								<td class="data"><span id="business_place">${k_aboutVO.businessStatus}</span></td>
+							</tr>
+						</table>
+					</div>
+					<p>현황</p>
+					<table class="table_">
+						<tr class="t_list">
+							<td>매출액</td>
+							<td>당기순이익</td>
 						</tr>
-						<tr>
-							<td class="list">영문기업명</td>
-							<td class="data"><span id="corporate_form">${k_aboutVO.compname_en}</span></td>
+						<tr class="t_data">
+							<td id="sales">${k_aboutVO.take}</td>
+							<td id="profit">${k_aboutVO.netincome}</td>
 						</tr>
-						<tr>
-							<td class="list">기업형태</td>
-							<td class="data"><span id="corporate_form">${k_aboutVO.businessType}</span></td>
+						<tr class="t_list">
+							<td>자본금</td>
+							<td>설립일</td>
 						</tr>
-						<tr>
-							<td class="list">대표자명</td>
-							<td class="data"><span id="owner_name">${k_aboutVO.repname}</span></td>
-						</tr>
-						<tr>
-							<td class="list">업종명</td>
-							<td class="data"><span id="business_type">${k_aboutVO.businessname}</span></td>
-						</tr>
-						<tr>
-							<td class="list">주요상품</td>
-							<td class="data"><span id="product">${k_aboutVO.main_product}</span></td>
-						</tr>
-						<tr>
-							<td class="list">인증현황</td>
-							<td class="data"><span id="certified">${k_aboutVO.certificationStatus}</span></td>
-						</tr>
-						<tr>
-							<td class="list">종업원 수</td>
-							<td class="data"><span id="staff">${k_aboutVO.employees}
-									명</span></td>
-						</tr>
-						<tr>
-							<td class="list">사업장 현황</td>
-							<td class="data"><span id="business_place">${k_aboutVO.businessStatus}</span></td>
+						<tr class="t_data">
+							<td id="capital">${k_aboutVO.capital}</td>
+							<td id="date">${k_aboutVO.establish}</td>
 						</tr>
 					</table>
-				</div>
-				<p>현황</p>
-				<table class="table_">
-					<tr class="t_list">
-						<td>매출액</td>
-						<td>당기순이익</td>
-					</tr>
-					<tr class="t_data">
-						<td id="sales">${k_aboutVO.take}</td>
-						<td id="profit">${k_aboutVO.netincome}</td>
-					</tr>
-					<tr class="t_list">
-						<td>자본금</td>
-						<td>설립일</td>
-					</tr>
-					<tr class="t_data">
-						<td id="capital">${k_aboutVO.capital}</td>
-						<td id="date">${k_aboutVO.establish}</td>
-					</tr>
-				</table>
-				<p>안내</p>
-				<table class="table_">
-					<tr class="t_list">
-						<td>주소</td>
-						<td></td>
-					</tr>
-					<tr class="t_data">
-						<td id="ad">${k_aboutVO.address}</td>
-						<td id="web"></td>
-					</tr>
-				</table>
-				<table class="table_">
-					<tr class="t_list">
-						<td>전화번호</td>
-						<td>Fax</td>
-					</tr>
-					<tr class="t_data">
-						<td id="tel">${k_aboutVO.phonenumber}</td>
-						<td id="fax">${k_aboutVO.fax}</td>
-					</tr>
-				</table>
-				<p>기업소개</p>
-				<div class="white_box" id="company_intro">
-					${k_aboutVO.aboutUs}</div>
+					<p>기업소개</p>
+					<div class="white_box" id="company_intro">
+						${k_aboutVO.aboutUs}</div>
+
 			</div>
 		</div>
 

@@ -9,6 +9,7 @@ public class JoinOne {
 	private String password;
 	private String salt;
 	private String fakeimg;
+	private boolean flag;
 	public int getOne_id() {
 		return one_id;
 	}
@@ -57,6 +58,12 @@ public class JoinOne {
 	}
 	public void setFakeimg(String fakeimg) {
 		this.fakeimg = fakeimg;
+	}
+	public boolean isFlag() {
+		return flag;
+	}
+	public void setFlag(boolean flag) {
+		this.flag = flag;
 	}
 	
 

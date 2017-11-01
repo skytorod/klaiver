@@ -20,8 +20,4 @@ public interface CategoryService {
 
 	public int listSearchCount(SearchCriteria cri) throws Exception;
 	
-	public K_homeVO search_home(String userid) throws Exception;
-	public K_aboutVO search_about(String userid) throws Exception;
-	public List<K_productVO> search_product(String userid) throws Exception;
-	public K_contactVO search_contact(String userid) throws Exception;
 }

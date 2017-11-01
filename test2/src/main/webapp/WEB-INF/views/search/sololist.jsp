@@ -84,11 +84,16 @@
 					});
 </script>
 <script type="text/javascript">
-	function gosolo(email) {
+function gomysolo(keyword) {
 
-		var id = email;
-		window.open("../member/individualfollow?email=" + id, "_blank");
-	}
+	var keyword = keyword;
+	location.href = "../cboard/news?userid=" + keyword;
+}
+function gosolo(keyword) {
+
+	var keyword = keyword;
+	location.href = "../search/searchNews?userid=" + keyword;
+}
 	function reload() {
 		if (window.opener) {
 			window.opener.document.location.href = window.opener.document.URL;
@@ -180,30 +185,7 @@
 						</li>
 					</c:if>
 					<c:forEach items="${sololist}" var="IndividualVO">
-						<c:if test="${sessionScope.login == IndividualVO.email}">
-							<li>
-								<div>
-									<div class="search_img" style='cursor: pointer;'
-										onclick="gosolo('${IndividualVO.email}');">
-										<img src="../resources/img/${IndividualVO.profimg}" /> <input
-											type="hidden" id="myid" value="${sessionScope.login}">
-										<input type="hidden" id="email" value="${IndividualVO.email}">
-									</div>
-									<div class="search_info">
-										<div class="search_info_name">
-											<span class="k_name" style='cursor: pointer;'
-												onclick="gosolo('${IndividualVO.email}');">${IndividualVO.username}</span>
-										</div>
-										<div class="search_info_name">
-											<span class="k_name" style='cursor: pointer;'
-												onclick="gosolo('${IndividualVO.email}');">${IndividualVO.email}</span>
-										</div>
-
-									</div>
-								</div>
-							</li>
-						</c:if>
-						<c:if test="${sessionScope.login!=IndividualVO.email}">
+						<c:if test="${sessionScope.login ne IndividualVO.email}">
 							<li>
 								<div>
 									<div class="search_img" style='cursor: pointer;'
@@ -228,6 +210,30 @@
 												<span class="follow_btn"><a
 													href="../follow/insertFollow?userid=${sessionScope.login}&followid=${IndividualVO.email}">Follow</a></span>
 											</c:if>
+										</div>
+
+									</div>
+								</div>
+							</li>
+						</c:if>
+						<c:if test="${sessionScope.login eq IndividualVO.email}">
+							<li>
+								<div>
+									<div class="search_img" style='cursor: pointer;'
+										onclick="gomysolo('${IndividualVO.email}');">
+										<img src="../resources/img/${IndividualVO.profimg}" /> <input
+											type="hidden" id="myid" value="${sessionScope.login}">
+										<input type="hidden" id="email" value="${IndividualVO.email}">
+									</div>
+									<div class="search_info">
+										<div class="search_info_name">
+											<span class="k_name" style='cursor: pointer;'
+												onclick="gomysolo('${IndividualVO.email}');">${IndividualVO.username}</span>
+										</div>
+										<div class="search_info_name">
+											<span class="k_name" style='cursor: pointer;'
+												onclick="gomysolo('${IndividualVO.email}');">${IndividualVO.email}</span>
+											
 										</div>
 
 									</div>

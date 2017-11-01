@@ -47,25 +47,5 @@ public class CategoryDAOImpl implements CategoryDAO {
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne(namespace+".listSearchCount",cri);
 	}
-	@Override
-	public K_homeVO search_home(String userid) throws Exception {
-		// TODO Auto-generated method stub
-		return sqlSession.selectOne(namespace +".search_home",userid );
-	}
-	@Override
-	public K_aboutVO search_about(String userid) throws Exception {
-		// TODO Auto-generated method stub
-		return sqlSession.selectOne(namespace +".search_about",userid );
-	}
-	@Override
-	public List<K_productVO> search_product(String userid) throws Exception {
-		// TODO Auto-generated method stub
-		return sqlSession.selectList(namespace +".search_product",userid );
-	}
-	@Override
-	public K_contactVO search_contact(String userid) throws Exception {
-		// TODO Auto-generated method stub
-		return sqlSession.selectOne(namespace +".search_contact",userid );
-	}
-
+	
 }

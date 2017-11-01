@@ -20,45 +20,6 @@ public class SearchDAOImpl implements SearchDAO {
 	private SqlSession sqlSession;
 
 	private static final String namespace = "com.test.mapper.SearchMapper";
-
-	@Override
-	public SearchVO search(String keyword) throws Exception {
-		// TODO Auto-generated method stub
-		return sqlSession.selectOne(namespace +".search",keyword );
-	}
-	
-	
-	@Override
-	public K_homeVO search_home(String userid) throws Exception {
-		// TODO Auto-generated method stub
-		return sqlSession.selectOne(namespace +".search_home",userid );
-	}
-	@Override
-	public K_aboutVO search_about(String userid) throws Exception {
-		// TODO Auto-generated method stub
-		return sqlSession.selectOne(namespace +".search_about",userid );
-	}
-	@Override
-	public List<K_productVO> search_product(String userid) throws Exception {
-		// TODO Auto-generated method stub
-		return sqlSession.selectList(namespace +".search_product",userid );
-	}
-	@Override
-	public K_contactVO search_contact(String userid) throws Exception {
-		// TODO Auto-generated method stub
-		return sqlSession.selectOne(namespace +".search_contact",userid );
-	}
-	@Override
-	public List<SearchVO> getid(SearchCriteria cri) throws Exception {
-		// TODO Auto-generated method stub
-		return sqlSession.selectList(namespace +".getid",cri);
-	}
-	@Override
-	public List<K_homeVO> search_home_list(String userid) throws Exception {
-		// TODO Auto-generated method stub
-		return sqlSession.selectList(namespace +".search_home_list",userid);
-	}
-	
 ////////////////////////////////////////////////////////////////////////////////
 	
 	@Override

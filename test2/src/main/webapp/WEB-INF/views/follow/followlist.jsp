@@ -9,7 +9,7 @@
 			<ul id="follow_list">
 				<c:forEach items="${followlist}" var="FollowVO">
 					<li><a
-						href="../member/individualfollow?email=${FollowVO.followid}"> <span
+						href="../search/searchNews?userid=${FollowVO.followid}"> <span
 							class="profile_img"><img
 								src="../resources/img/${FollowVO.profimg}" /></span>
 

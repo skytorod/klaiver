@@ -1,9 +1,6 @@
 package com.test.controller;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -17,14 +14,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.test.domain.ComReplyVO;
-import com.test.domain.CompanyBoardVO;
-import com.test.domain.CompanyVO;
 import com.test.domain.FollowVO;
-import com.test.domain.IndividualVO;
+import com.test.domain.JoinOne;
 import com.test.domain.K_aboutVO;
 import com.test.domain.K_contactVO;
-import com.test.domain.K_homeVO;
 import com.test.domain.K_productVO;
 import com.test.domain.PageMaker;
 import com.test.domain.SearchCriteria;
@@ -58,7 +51,7 @@ public class SearchController {
 			throws Exception {
 		String id = (String) request.getSession().getAttribute("login");
 		model.addAttribute("followlist", serviceFollow.listSearchCriteriasearch(id));
-		
+
 		List<SearchVO> list = service.list(cri);
 		List<FollowVO> selectid = serviceFollow.getid(id);
 		for (int i = 0; i < list.size(); i++) {
@@ -70,9 +63,8 @@ public class SearchController {
 				}
 			}
 		}
-		
+
 		model.addAttribute("list", list);
-		
 
 		List<K_productVO> productlist = service.searchproduct(cri);
 		if (productlist.size() != 0) {
@@ -85,7 +77,7 @@ public class SearchController {
 		}
 		model.addAttribute("productlist", productlist);
 		List<SearchVO> listsolo = service.listsolo(cri);
-		
+
 		List<FollowVO> selectidsolo = serviceFollow.getid(id);
 		for (int i = 0; i < listsolo.size(); i++) {
 			listsolo.get(i).setFlag(false);
@@ -99,7 +91,7 @@ public class SearchController {
 
 		}
 		model.addAttribute("listsolo", listsolo);
-		//model.addAttribute("updatenewpost", servicescroll.updatenewpost(id));
+		// model.addAttribute("updatenewpost", servicescroll.updatenewpost(id));
 
 	}
 
@@ -109,35 +101,21 @@ public class SearchController {
 		logger.info(cri.toString());
 		String id = (String) request.getSession().getAttribute("login");
 		model.addAttribute("followlist", serviceFollow.listSearchCriteriasearch(id));
-		/*
-		 * model.addAttribute("followlist",
-		 * service1.listSearchCriteriasearch(id)); Map<String, String> map = new
-		 * HashMap<String, String>(); map.put("userid", id);
-		 * model.addAttribute("followcompanylist",
-		 * service1.listSearchCriteriaCompany(map));
-		 */
 		model.addAttribute("listcount", service.listSearchCount(cri));
 		PageMaker pageMaker = new PageMaker();
 		pageMaker.setCri(cri);
 		pageMaker.setTotalCount(service.listSearchCount(cri));
 		List<SearchVO> list = service.listSearchCriteria(cri);
-
-		/*
-		 * model.addAttribute("mycode", servicecboard.searchcode(id));
-		 * 
-		 * List<FollowVO> selectComid = service1.getComid(map); List<CompanyVO>
-		 * mycomCode = servicecboard.searchcode(id); for (int i = 0; i <
-		 * list.size(); i++) { list.get(i).setFlag(false);
-		 * list.get(i).setMeflag(false); for (int j = 0; j < selectComid.size();
-		 * j++) { if
-		 * (list.get(i).getCompanyCode().equals(selectComid.get(j).getFollowcode
-		 * ())) { list.get(i).setFlag(true); break; } } for (int j = 0; j <
-		 * mycomCode.size(); j++) { if
-		 * (list.get(i).getCompanyCode().equals(mycomCode.get(j).getCompanyCode(
-		 * ))) { list.get(i).setMeflag(true); break; } }
-		 * 
-		 * }
-		 */
+		List<FollowVO> selectid = serviceFollow.getid(id);
+		for (int i = 0; i < list.size(); i++) {
+			list.get(i).setFlag(false);
+			for (int j = 0; j < selectid.size(); j++) {
+				if (list.get(i).getEmail().equals(selectid.get(j).getFollowid())) {
+					list.get(i).setFlag(true);
+					break;
+				}
+			}
+		}
 		model.addAttribute("list", list);
 		/*
 		 * model.addAttribute("updatenewpost", servicescroll.updatenewpost(id));
@@ -152,34 +130,24 @@ public class SearchController {
 		logger.info(cri.toString());
 		String id = (String) request.getSession().getAttribute("login");
 		model.addAttribute("followlist", serviceFollow.listSearchCriteriasearch(id));
-		/*
-		 * String id = (String) request.getSession().getAttribute("login");
-		 * model.addAttribute("followlist",
-		 * service1.listSearchCriteriasearch(id)); Map<String, String> map = new
-		 * HashMap<String, String>(); map.put("userid", id);
-		 * model.addAttribute("followcompanylist",
-		 * service1.listSearchCriteriaCompany(map));
-		 */
 		model.addAttribute("sololistcount", service.listsoloSearchCount(cri));
 		PageMaker pageMaker = new PageMaker();
 		pageMaker.setCri(cri);
 		pageMaker.setTotalCount(service.listsoloSearchCount(cri));
 		List<SearchVO> sololist = service.listsoloSearchCriteria(cri);
+		List<FollowVO> selectidsolo = serviceFollow.getid(id);
+		for (int i = 0; i < sololist.size(); i++) {
+			sololist.get(i).setFlag(false);
+
+			for (int j = 0; j < selectidsolo.size(); j++) {
+				if (sololist.get(i).getEmail().equals(selectidsolo.get(j).getFollowid())) {
+					sololist.get(i).setFlag(true);
+					break;
+				}
+			}
+
+		}
 		model.addAttribute("sololist", sololist);
-		/*
-		 * List<FollowVO> selectid = service1.getid(id);
-		 * 
-		 * for (int i = 0; i < sololist.size(); i++) {
-		 * sololist.get(i).setFlag(false);
-		 * 
-		 * for (int j = 0; j < selectid.size(); j++) { if
-		 * (sololist.get(i).getEmail().equals(selectid.get(j).getFollowid())) {
-		 * sololist.get(i).setFlag(true); break; } }
-		 * 
-		 * } model.addAttribute("updatenewpost",
-		 * servicescroll.updatenewpost(id)); model.addAttribute("getid",
-		 * service1.getid(id));
-		 */
 		model.addAttribute("pageMaker", pageMaker);
 	}
 
@@ -218,192 +186,173 @@ public class SearchController {
 		 */
 		model.addAttribute("pageMaker", pageMaker);
 	}
+
 	@RequestMapping(value = "/check_product", method = RequestMethod.GET)
 	public String check_product(@RequestParam("userid") String userid, Model model, HttpServletRequest request)
 			throws Exception {
 		String id = (String) request.getSession().getAttribute("login");
-			if (userid.equals(id)) {
-				return "redirect:../cboard/readPage_product?userid=" + userid;
-			} else if (!userid.equals(id)) {
-				return "redirect:../search/search_product?userid=" + userid;
-			}
-			return id;
+		if (userid.equals(id)) {
+			return "redirect:../cboard/readPage_product?userid=" + userid;
+		} else if (!userid.equals(id)) {
+			return "redirect:../search/search_product?userid=" + userid;
+		}
+		return id;
 
 	}
-	@RequestMapping(value = "/search_home_list", method = RequestMethod.GET)
-	public void search_home_list(@RequestParam("userid") String userid, Model model, HttpServletRequest request)
+
+	@RequestMapping(value = "/searchNews", method = RequestMethod.GET)
+	public void newsGET(@RequestParam("userid") String userid, HttpServletRequest request, Model model)
 			throws Exception {
 		String id = (String) request.getSession().getAttribute("login");
-		model.addAttribute("followlist", service1.listSearchCriteriasearch(id));
-		Map<String, String> map = new HashMap<String, String>();
-		map.put("userid", id);
-		model.addAttribute("followcompanylist", service1.listSearchCriteriaCompany(map));
-		List<CompanyVO> list = servicecboard.getcompanylist(userid);
-		model.addAttribute("list", list);
-	}
-
-	@RequestMapping(value = "/check_company", method = RequestMethod.GET)
-	public String check_company(@RequestParam("code") String code, Model model, HttpServletRequest request)
-			throws Exception {
-
-		if (servicecboard.readPage_home(code).getCompanyCode() != null) {
-			return "redirect:../search/search_home?code=" + code;
-		} else {
-			return "redirect:../cboard/register_home";
-		}
-	}
-
-	@RequestMapping(value = "/search_home", method = RequestMethod.GET)
-	public void search_homeGet(@RequestParam("code") String code, K_homeVO hvo, Model model, HttpServletRequest request)
-			throws Exception {
-		String id = (String) request.getSession().getAttribute("login");
-		model.addAttribute("followlist", service1.listSearchCriteriasearch(id));
-		Map<String, String> map = new HashMap<String, String>();
-		map.put("userid", id);
-		map.put("followcode", code);
-
-		model.addAttribute("followcompanylist", service1.listSearchCriteriaCompany(map));
-		K_homeVO vo = service.search_home(code);
-		model.addAttribute(service.search_about(code));
-		model.addAttribute(vo);
-		List<FollowVO> selectComid = service1.getComid(map);
-
-		vo.setFlag(false);
-		for (int i = 0; i < selectComid.size(); i++) {
-			if (selectComid.get(i).getFollowcode().equals(vo.getCompanyCode())) {
-				vo.setFlag(true);
-				break;
+		model.addAttribute("followlist", serviceFollow.listSearchCriteriasearch(id));
+		List<JoinOne> join= servicecboard.memberinfo(userid);
+		List<FollowVO> selectid = serviceFollow.getid(id);
+		for (int i = 0; i < join.size(); i++) {
+			join.get(i).setFlag(false);
+			for (int j = 0; j < selectid.size(); j++) {
+				if (join.get(i).getEmail().equals(selectid.get(j).getFollowid())) {
+					join.get(i).setFlag(true);
+					break;
+				}
 			}
 		}
-		model.addAttribute("followerComcount", service1.followerComcount(code));
+		model.addAttribute("IndividualVO", join);
+		model.addAttribute("sessionidName", servicecboard.serssionidName(id));
+		
+		if (servicecboard.readPage_about(userid) != null) {
+			model.addAttribute(servicecboard.readPage_about(userid));
+		}
+		if (servicecboard.readPage_contact(userid) != null) {
+			model.addAttribute(servicecboard.readPage_contact(userid));
+		}
 		/*
-		 * model.addAttribute("updatenewpost",
-		 * servicescroll.updatenewpost(id));; model.addAttribute("keyword",
-		 * cri.getKeyword());
+		 * model.addAttribute(service.search_home(code)); K_aboutVO vo =
+		 * service.search_about(code); model.addAttribute(vo); List<FollowVO>
+		 * selectComid = service1.getComid(map);
+		 * 
+		 * vo.setFlag(false); for (int i = 0; i < selectComid.size(); i++) { if
+		 * (selectComid.get(i).getFollowcode().equals(vo.getCompanyCode())) {
+		 * vo.setFlag(true); break; } } model.addAttribute("followerComcount",
+		 * service1.followerComcount(code)); model.addAttribute("IndividualVO",
+		 * service2.Individual(id)); model.addAttribute("sessionidName",
+		 * servicescroll.serssionidName(id)); model.addAttribute("code", code);
+		 * List<CompanyBoardVO> scrolllist =
+		 * servicecompany.listSearchCriteria(code);
+		 * model.addAttribute("scrolllist", scrolllist); String manager =
+		 * servicecompany.searchmanager(code); model.addAttribute("manager",
+		 * manager); List<ComReplyVO> replylist = new ArrayList<>(); for (int i
+		 * = 0; i < scrolllist.size(); i++) { int cbid =
+		 * scrolllist.get(i).getCbid();
+		 * replylist.addAll(servicecompany.comreplylist(cbid)); }
+		 * model.addAttribute("replylist", replylist);
 		 */
+
+	}
+
+	@RequestMapping(value = "/check_about", method = RequestMethod.GET)
+	public String check_about(@RequestParam("userid") String userid, HttpServletRequest request, Model model)
+			throws Exception {
+		if (servicecboard.readPage_about(userid) != null) {
+			return "redirect:./search_about?userid=" + userid;
+		} else {
+			return "redirect:./search_about?userid=" + userid;
+		}
 
 	}
 
 	@RequestMapping(value = "/search_about", method = RequestMethod.GET)
-	public void search_aboutGet(@RequestParam("code") String code, K_aboutVO avo, Model model,
+	public void search_aboutGet(@RequestParam("userid") String userid, Model model,
 			HttpServletRequest request) throws Exception {
 		String id = (String) request.getSession().getAttribute("login");
-		model.addAttribute("followlist", service1.listSearchCriteriasearch(id));
-		Map<String, String> map = new HashMap<String, String>();
-		map.put("userid", id);
-		map.put("followcode", code);
-
-		model.addAttribute("followcompanylist", service1.listSearchCriteriaCompany(map));
-		model.addAttribute(service.search_home(code));
-		K_aboutVO vo = service.search_about(code);
-		model.addAttribute(vo);
-		List<FollowVO> selectComid = service1.getComid(map);
-
-		vo.setFlag(false);
-		for (int i = 0; i < selectComid.size(); i++) {
-			if (selectComid.get(i).getFollowcode().equals(vo.getCompanyCode())) {
-				vo.setFlag(true);
-				break;
+		model.addAttribute("followlist", serviceFollow.listSearchCriteriasearch(id));
+		List<JoinOne> join= servicecboard.memberinfo(userid);
+		List<FollowVO> selectid = serviceFollow.getid(id);
+		for (int i = 0; i < join.size(); i++) {
+			join.get(i).setFlag(false);
+			for (int j = 0; j < selectid.size(); j++) {
+				if (join.get(i).getEmail().equals(selectid.get(j).getFollowid())) {
+					join.get(i).setFlag(true);
+					break;
+				}
 			}
 		}
-		model.addAttribute("followerComcount", service1.followerComcount(code));
-		/*
-		 * model.addAttribute("updatenewpost", servicescroll.updatenewpost(id));
-		 */
+		model.addAttribute("IndividualVO", join);
+		model.addAttribute("sessionidName", servicecboard.serssionidName(id));
+		if (servicecboard.readPage_about(userid) != null) {
+			model.addAttribute(servicecboard.readPage_about(userid));
+		}
+		if (servicecboard.readPage_contact(userid) != null) {
+			model.addAttribute(servicecboard.readPage_contact(userid));
+		}
+
 	}
-
-	
-
 	@RequestMapping(value = "/search_product", method = RequestMethod.GET)
-	public void search_productGet(@RequestParam("code") String code, Model model, HttpServletRequest request)
+	public void search_productGet(@RequestParam("userid") String userid, Model model, HttpServletRequest request)
 			throws Exception {
 		String id = (String) request.getSession().getAttribute("login");
-		model.addAttribute("followlist", service1.listSearchCriteriasearch(id));
-		Map<String, String> map = new HashMap<String, String>();
-		map.put("userid", id);
-		map.put("followcode", code);
-		model.addAttribute("followcompanylist", service1.listSearchCriteriaCompany(map));
-		model.addAttribute(service.search_home(code));
-		K_aboutVO vo = service.search_about(code);
-		model.addAttribute(vo);
-		List<K_productVO> pvo = service.search_product(code);
-		model.addAttribute("list", pvo);
-		List<FollowVO> selectComid = service1.getComid(map);
-		vo.setFlag(false);
-		for (int i = 0; i < selectComid.size(); i++) {
-			if (selectComid.get(i).getFollowcode().equals(vo.getCompanyCode())) {
-				vo.setFlag(true);
-				break;
+		model.addAttribute("followlist", serviceFollow.listSearchCriteriasearch(id));
+		List<JoinOne> join= servicecboard.memberinfo(userid);
+		List<FollowVO> selectid = serviceFollow.getid(id);
+		for (int i = 0; i < join.size(); i++) {
+			join.get(i).setFlag(false);
+			for (int j = 0; j < selectid.size(); j++) {
+				if (join.get(i).getEmail().equals(selectid.get(j).getFollowid())) {
+					join.get(i).setFlag(true);
+					break;
+				}
 			}
 		}
-		model.addAttribute("followerComcount", service1.followerComcount(code));
+		model.addAttribute("IndividualVO", join);
+		model.addAttribute("sessionidName", servicecboard.serssionidName(id));
+		if (servicecboard.readPage_about(userid) != null) {
+			model.addAttribute(servicecboard.readPage_about(userid));
+		}
+		if (servicecboard.readPage_contact(userid) != null) {
+			model.addAttribute(servicecboard.readPage_contact(userid));
+		}
+		List<K_productVO> pvo = servicecboard.readPage_product(userid);
+
+		model.addAttribute("list", pvo);
 		/*
 		 * model.addAttribute("updatenewpost", servicescroll.updatenewpost(id));
 		 */
 	}
+	@RequestMapping(value = "/check_contact", method = RequestMethod.GET)
+	public String check_contact(@RequestParam("userid") String userid, HttpServletRequest request, Model model)
+			throws Exception {
+		if (servicecboard.readPage_contact(userid) != null) {
+			return "redirect:./search_contact?userid=" + userid;
+		} else {
+			return "redirect:./search_contact?userid=" + userid;
+		}
 
+	}
 	@RequestMapping(value = "/search_contact", method = RequestMethod.GET)
-	public void search_contactGet(@RequestParam("code") String code, K_contactVO cvo, Model model,
+	public void search_contactGet(@RequestParam("userid") String userid, Model model,
 			HttpServletRequest request) throws Exception {
 		String id = (String) request.getSession().getAttribute("login");
-		model.addAttribute("followlist", service1.listSearchCriteriasearch(id));
-		Map<String, String> map = new HashMap<String, String>();
-		map.put("userid", id);
-		map.put("followcode", code);
-		model.addAttribute("followcompanylist", service1.listSearchCriteriaCompany(map));
-		model.addAttribute(service.search_home(code));
-		model.addAttribute(service.search_about(code));
-		model.addAttribute("group", servicecboard.selectgroup(code));
-		K_contactVO vo = service.search_contact(code);
-		model.addAttribute(vo);
-		List<FollowVO> selectComid = service1.getComid(map);
-
-		vo.setFlag(false);
-		for (int i = 0; i < selectComid.size(); i++) {
-			if (selectComid.get(i).getFollowcode().equals(vo.getCompanyCode())) {
-				vo.setFlag(true);
-				break;
+		model.addAttribute("followlist", serviceFollow.listSearchCriteriasearch(id));
+		List<JoinOne> join= servicecboard.memberinfo(userid);
+		List<FollowVO> selectid = serviceFollow.getid(id);
+		for (int i = 0; i < join.size(); i++) {
+			join.get(i).setFlag(false);
+			for (int j = 0; j < selectid.size(); j++) {
+				if (join.get(i).getEmail().equals(selectid.get(j).getFollowid())) {
+					join.get(i).setFlag(true);
+					break;
+				}
 			}
 		}
-		model.addAttribute("followerComcount", service1.followerComcount(code));
+		model.addAttribute("IndividualVO", join);
+		model.addAttribute("sessionidName", servicecboard.serssionidName(id));
+		if (servicecboard.readPage_about(userid) != null) {
+			model.addAttribute(servicecboard.readPage_about(userid));
+		}
+		if (servicecboard.readPage_contact(userid) != null) {
+			model.addAttribute(servicecboard.readPage_contact(userid));
+		}
 		/*
 		 * model.addAttribute("updatenewpost", servicescroll.updatenewpost(id));
 		 */
-	}
-
-	@RequestMapping(value = "/searchNews", method = RequestMethod.GET)
-	public void newsGET(@RequestParam("code") String code, HttpServletRequest request, Model model) throws Exception {
-		String id = (String) request.getSession().getAttribute("login");
-		model.addAttribute("followlist", service1.listSearchCriteriasearch(id));
-		Map<String, String> map = new HashMap<String, String>();
-		map.put("userid", id);
-		model.addAttribute("followcompanylist", service1.listSearchCriteriaCompany(map));
-		model.addAttribute(service.search_home(code));
-		K_aboutVO vo = service.search_about(code);
-		model.addAttribute(vo);
-		List<FollowVO> selectComid = service1.getComid(map);
-
-		vo.setFlag(false);
-		for (int i = 0; i < selectComid.size(); i++) {
-			if (selectComid.get(i).getFollowcode().equals(vo.getCompanyCode())) {
-				vo.setFlag(true);
-				break;
-			}
-		}
-		model.addAttribute("followerComcount", service1.followerComcount(code));
-		model.addAttribute("IndividualVO", service2.Individual(id));
-		model.addAttribute("sessionidName", servicescroll.serssionidName(id));
-		model.addAttribute("code", code);
-		List<CompanyBoardVO> scrolllist = servicecompany.listSearchCriteria(code);
-		model.addAttribute("scrolllist", scrolllist);
-		String manager = servicecompany.searchmanager(code);
-		model.addAttribute("manager", manager);
-		List<ComReplyVO> replylist = new ArrayList<>();
-		for (int i = 0; i < scrolllist.size(); i++) {
-			int cbid = scrolllist.get(i).getCbid();
-			replylist.addAll(servicecompany.comreplylist(cbid));
-		}
-		model.addAttribute("replylist", replylist);
-
 	}
 }

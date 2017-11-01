@@ -2,8 +2,10 @@ package com.test.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.inject.Inject;
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.test.domain.CategoryVO;
+import com.test.domain.FollowVO;
 import com.test.domain.JoinOne;
 import com.test.domain.K_aboutVO;
 import com.test.domain.K_contactVO;
@@ -53,7 +56,8 @@ public class CompanyInfoController {
 		if(service.readPage_contact(userid) !=null){
 			model.addAttribute(service.readPage_contact(userid));
 		}
-		
+		model.addAttribute("followercount", serviceFollow.followercount(id));
+		model.addAttribute("followingcount", serviceFollow.followingcount(id));
 		
 		/*
 		 *  Map<String, String> map = new
@@ -110,7 +114,8 @@ public class CompanyInfoController {
 		if(service.readPage_contact(userid) !=null){
 			model.addAttribute(service.readPage_contact(userid));
 		}
-
+		model.addAttribute("followercount", serviceFollow.followercount(id));
+		model.addAttribute("followingcount", serviceFollow.followingcount(id));
 	}
 
 	@RequestMapping(value = "/readPage_product", method = RequestMethod.GET)
@@ -129,6 +134,8 @@ public class CompanyInfoController {
 		if(service.readPage_contact(userid) !=null){
 			model.addAttribute(service.readPage_contact(userid));
 		}
+		model.addAttribute("followercount", serviceFollow.followercount(id));
+		model.addAttribute("followingcount", serviceFollow.followingcount(id));
 	}
 
 	@RequestMapping(value = "/check_contact", method = RequestMethod.GET)
@@ -156,6 +163,8 @@ public class CompanyInfoController {
 		if(service.readPage_contact(userid) !=null){
 			model.addAttribute(service.readPage_contact(userid));
 		}
+		model.addAttribute("followercount", serviceFollow.followercount(id));
+		model.addAttribute("followingcount", serviceFollow.followingcount(id));
 	}
 
 	@RequestMapping(value = "/register_about", method = RequestMethod.GET)
@@ -250,6 +259,8 @@ public class CompanyInfoController {
 		if(service.readPage_contact(userid) !=null){
 			model.addAttribute(service.readPage_contact(userid));
 		}
+		model.addAttribute("followercount", serviceFollow.followercount(id));
+		model.addAttribute("followingcount", serviceFollow.followingcount(id));
 	}
 
 	@RequestMapping(value = "/update_home", method = RequestMethod.POST)
@@ -300,6 +311,8 @@ public class CompanyInfoController {
 		K_aboutVO avo = service.readPage_about(userid);
 		avo.setAboutUs(avo.getAboutUs().replaceAll("<br>", "\r\n"));
 		model.addAttribute(avo);
+		model.addAttribute("followercount", serviceFollow.followercount(id));
+		model.addAttribute("followingcount", serviceFollow.followingcount(id));
 	}
 
 	@RequestMapping(value = "/update_about", method = RequestMethod.POST)
@@ -370,6 +383,8 @@ public class CompanyInfoController {
 		model.addAttribute("sessionidName", service.serssionidName(id));
 		model.addAttribute(service.readPage_about(userid));
 		model.addAttribute(service.readPage_contact(userid));
+		model.addAttribute("followercount", serviceFollow.followercount(id));
+		model.addAttribute("followingcount", serviceFollow.followingcount(id));
 	}
 
 	@RequestMapping(value = "/update_contact", method = RequestMethod.POST)
@@ -377,5 +392,86 @@ public class CompanyInfoController {
 		String id = (String) request.getSession().getAttribute("login");
 		service.update_contact(cvo);
 		return "redirect:../cboard/check_contact?userid=" + id;
+	}
+	/////////////////////////////////////// 개인페이지 팔로워보기////////////////
+	@RequestMapping(value = "/soloViewfollower", method = RequestMethod.GET)
+	public void soloViewfollower(String email, HttpServletRequest request, Model model) throws Exception {
+		String id = (String) request.getSession().getAttribute("login");
+		List<FollowVO> selectid = serviceFollow.getid(id);
+		List<FollowVO> list = serviceFollow.soloViewfollower(email);
+		model.addAttribute("soloViewfollower", list);
+		for (int i = 0; i < list.size(); i++) {
+			list.get(i).setFlag(false);
+
+			for (int j = 0; j < selectid.size(); j++) {
+				if (list.get(i).getMyid().equals(selectid.get(j).getFollowid())) {
+					list.get(i).setFlag(true);
+					break;
+				}
+			}
+		}
+	}
+
+	@RequestMapping(value = "/soloViewfollowerScroll", method = RequestMethod.POST)
+	public @ResponseBody List<FollowVO> soloViewfollowerScroll(HttpServletRequest request, String fid, String email)
+			throws Exception {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("fid", fid);
+		map.put("email", email);
+		List<FollowVO> list = service2.soloViewfollowerScroll(map);
+		String id = (String) request.getSession().getAttribute("login");
+		List<FollowVO> selectid = service2.getid(id);
+		for (int i = 0; i < list.size(); i++) {
+			list.get(i).setFlag(false);
+			for (int j = 0; j < selectid.size(); j++) {
+				if (list.get(i).getMyid().equals(selectid.get(j).getFollowid())) {
+					list.get(i).setFlag(true);
+					break;
+				}
+			}
+		}
+		return list;
+	}
+	////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	@RequestMapping(value = "/soloViewfollowing", method = RequestMethod.GET)
+	public void soloViewfollowing(String email, HttpServletRequest request, Model model) throws Exception {
+
+		String id = (String) request.getSession().getAttribute("login");
+		List<FollowVO> selectid = serviceFollow.getid(id);
+		List<FollowVO> list = serviceFollow.soloViewfollowing(email);
+		model.addAttribute("soloViewfollowing", list);
+		model.addAttribute("userid", email);
+		for (int i = 0; i < list.size(); i++) {
+			list.get(i).setFlag(true);
+			for (int j = 0; j < selectid.size(); j++) {
+				if (list.get(i).getMyid().equals(selectid.get(j).getFollowid())) {
+					list.get(i).setFlag(false);
+					break;
+				}
+			}
+		}
+	}
+
+	@RequestMapping(value = "/soloViewfollowingScroll", method = RequestMethod.POST)
+	public @ResponseBody List<FollowVO> soloViewfollowingScroll(HttpServletRequest request, String fid, String email)
+			throws Exception {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("fid", fid);
+		map.put("email", email);
+		List<FollowVO> list = service2.soloViewfollowingScroll(map);
+		String id = (String) request.getSession().getAttribute("login");
+		List<FollowVO> selectid = service2.getid(id);
+		for (int i = 0; i < list.size(); i++) {
+			list.get(i).setFlag(true);
+			for (int j = 0; j < selectid.size(); j++) {
+				if (list.get(i).getMyid().equals(selectid.get(j).getFollowid())) {
+					list.get(i).setFlag(false);
+					break;
+				}
+			}
+
+		}
+		return list;
 	}
 }

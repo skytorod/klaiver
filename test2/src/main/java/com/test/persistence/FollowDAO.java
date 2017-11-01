@@ -17,9 +17,6 @@ public interface FollowDAO {
 
 	
 
-	public int followercount(String id) throws Exception;
-
-	public int followingcount(String id) throws Exception;
 	
 	public int followerComcount(String id) throws Exception;
 
@@ -31,13 +28,6 @@ public interface FollowDAO {
 
 	public void deleteCom(Map<String, String> map1) throws Exception;
 
-	public List<FollowVO> soloViewfollower(String email) throws Exception;
-
-	public List<FollowVO> soloViewfollowerScroll(Map<String, String> map) throws Exception;
-
-	public List<FollowVO> soloViewfollowing(String email) throws Exception;
-
-	public List<FollowVO> soloViewfollowingScroll(Map<String, String> map) throws Exception;
 
 	public List<FollowVO> myCompanyfolloer(String code) throws Exception;
 
@@ -67,4 +57,16 @@ public interface FollowDAO {
 	public void insertfollow(Map<String, String> map) throws Exception;
 	
 	public void delete(Map<String, String> map1) throws Exception;
+
+	public int followercount(String id) throws Exception;
+
+	public int followingcount(String id) throws Exception;
+
+	public List<FollowVO> soloViewfollower(String email) throws Exception;
+
+	public List<FollowVO> soloViewfollowerScroll(Map<String, String> map) throws Exception;
+
+	public List<FollowVO> soloViewfollowing(String email) throws Exception;
+
+	public List<FollowVO> soloViewfollowingScroll(Map<String, String> map) throws Exception;
 }

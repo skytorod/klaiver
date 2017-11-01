@@ -249,9 +249,13 @@
 				<div id="company_info">
 					<!--기업정보-->
 					<c:forEach items="${IndividualVO}" var="IndividualVO">
-						<div id="individual_name">${k_aboutVO.compname_kr}<br>
+						<div id="individual_name">
+						<c:if test="${k_aboutVO eq null && k_contactVO eq null}">${IndividualVO.email}<br>${IndividualVO.username}<br></c:if>
+						<c:if test="${k_aboutVO ne null || k_contactVO ne null}">
+						${k_aboutVO.compname_kr}<br>
 						${k_aboutVO.compname_en}<br>
 						${k_contactVO.address}
+						</c:if>
 						<a href="../cboard/update_home?userid=${sessionScope.login}"><img
 								src="../resources/images/set.png" /></a>
 						</div>

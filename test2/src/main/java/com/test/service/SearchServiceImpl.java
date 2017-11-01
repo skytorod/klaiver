@@ -19,44 +19,6 @@ public class SearchServiceImpl implements SearchService{
 	@Inject
 	private SearchDAO dao;
 
-	@Override
-	public SearchVO search(String keyword) throws Exception {
-		// TODO Auto-generated method stub
-		return dao.search(keyword);
-	}
-	
-	@Override
-	public K_homeVO search_home(String userid) throws Exception {
-		// TODO Auto-generated method stub
-		return dao.search_home(userid);
-	}
-	@Override
-	public K_aboutVO search_about(String userid) throws Exception {
-		// TODO Auto-generated method stub
-		return dao.search_about(userid);
-	}
-	@Override
-	public List<K_productVO> search_product(String userid) throws Exception {
-		// TODO Auto-generated method stub
-		return dao.search_product(userid);
-	}
-	@Override
-	public K_contactVO search_contact(String userid) throws Exception {
-		// TODO Auto-generated method stub
-		return dao.search_contact(userid);
-	}
-	@Override
-	public List<SearchVO> getid(SearchCriteria cri) throws Exception {
-		// TODO Auto-generated method stub
-		return dao.getid(cri);
-	}
-	@Override
-	public List<K_homeVO> search_home_list(String userid) throws Exception {
-		// TODO Auto-generated method stub
-		return dao.search_home_list(userid);
-	}
-	
-	
 	////////////////////////////////////////////////////////////////////////
 	@Override
 	public List<SearchVO> list(SearchCriteria cri) throws Exception {

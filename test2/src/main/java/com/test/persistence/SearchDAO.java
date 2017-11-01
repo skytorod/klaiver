@@ -10,18 +10,6 @@ import com.test.domain.SearchCriteria;
 import com.test.domain.SearchVO;
 
 public interface SearchDAO {
-
-	public SearchVO search(String keyword) throws Exception;
-	
-	public K_homeVO search_home(String userid) throws Exception;
-	public K_aboutVO search_about(String userid) throws Exception;
-	public List<K_productVO> search_product(String userid) throws Exception;
-	public K_contactVO search_contact(String userid) throws Exception;
-	public List<SearchVO> getid(SearchCriteria cri)throws Exception;
-	public List<K_homeVO> search_home_list(String userid) throws Exception;
-	
-	
-	
 	public List<SearchVO> list(SearchCriteria cri)throws Exception;
 	
 	public List<SearchVO> listsolo(SearchCriteria cri) throws Exception;

@@ -19,6 +19,7 @@
 <link rel='stylesheet' type='text/css'
 	href='../resources/css/klaiver.css' />
 
+
 <script src="../resources/js/jquery-1.11.2.js"></script>
 <script>
 	// 이미지 클릭시 원본 크기로 팝업 보기
@@ -50,19 +51,18 @@
 	}
 </script>
 <script>
-	function myComfollower(code) {
-		var code = code;
-		var popUrl = "../member/soloComfollower?code=" + code;
-		var windowW = 400; // 창의 가로 길이
-		var windowH = 400; // 창의 세로 길이
-		var left = Math.ceil((window.screen.width - windowW) / 2);
-		var top = Math.ceil((window.screen.height - windowH) / 2);
-		window.open(popUrl, "목록보기", "l top=" + top + ", left=" + left
-				+ ", height=" + windowH + ", width=" + windowW);
-	}
+function myComfollower(code){
+	var code = code;
+ 	var popUrl = "../member/soloComfollower?code="+code;
+		var windowW = 400;  // 창의 가로 길이
+    var windowH = 400;  // 창의 세로 길이
+    var left = Math.ceil((window.screen.width - windowW)/2);
+    var top = Math.ceil((window.screen.height - windowH)/2);
+	window.open(popUrl,"목록보기","l top="+top+", left="+left+", height="+windowH+", width="+windowW);
+}
 	function myComfollowing(email) {
 		var email = email;
-		var popUrl = "../member/comViewfollowing?email=" + email;
+		var popUrl = "../member/soloComfollowing?email=" + email;
 		var windowW = 400; // 창의 가로 길이
 		var windowH = 400; // 창의 세로 길이
 		var left = Math.ceil((window.screen.width - windowW) / 2);
@@ -134,23 +134,7 @@
 										});
 					});
 </script>
-<script>
-	$(document)
-			.ready(
-					function() {
-						$("#message")
-								.click(
-										function() {
-											var email = $("#userids").val();
-											var popUrl = "../notes/fsender?email="
-													+ email;
-											var popOption = "width=1000, height=360, resizable=no,location=no, scrollbars=no, status=yes;";
-											window.open(popUrl, "보내는page",
-													popOption);
-											window.close();
-										});
-					});
-</script>
+
 <script type="text/javascript">
 	function reload() {
 		if (window.opener) {
@@ -174,17 +158,17 @@
 		</form>
 		<ul id="icon">
 			<li class="icon1"><a
-				href="../member/individual?keyword=${sessionScope.login}">
-					<div class="cover"></div> <img src="../resources/images/icon1.png"
-					alt="개인페이지" /> <c:if test="${fn:length(updatenewpost) ne 0}">new</c:if>
-			</a></li>
+					href="../cboard/news?userid=${sessionScope.login}"><div
+							class="cover"></div> <img src="../resources/images/icon1.png"
+						alt="개인페이지" />
+				</a></li>
 			<li class="icon2"><a
 				href="../cboard/companylist?userid=${sessionScope.login}"><div
 						class="cover"></div> <img src="../resources/images/icon2.png"
 					alt="기업페이지" /></a></li>
 			<li class="icon3"><a href="../klogin/logout"><div
-						class="cover"></div> <img src="../resources/images/icon3.png"
-					alt="로그아웃" /></a></li>
+						class="cover"></div>
+					<img src="../resources/images/icon3.png" alt="로그아웃" /></a></li>
 		</ul>
 	</header>
 
@@ -198,53 +182,64 @@
 
 			<div id="company_profile">
 				<div id="company_img">
-
-					<img src="../resources/img/${k_homeVO.pimage}"
-						onclick="doImgPop('../resources/img/${k_homeVO.pimage}')" />
+					<c:forEach items="${IndividualVO}" var="IndividualVO">
+						<img src="../resources/img/${IndividualVO.profimg}"
+							onclick="doImgPop('../resources/img/${IndividualVO.profimg}')" />
+					</c:forEach>
 				</div>
 				<!--기업프로필이미지-->
+				<c:forEach items="${IndividualVO}" var="IndividualVO">
 				<div id="company_info">
 					<!--기업정보-->
-					<div id="company_name">${k_aboutVO.compname_kr}</div>
-					<div id="company_type">${k_aboutVO.businessname}</div>
-					<div id="company_loc">${k_homeVO.country}</div>
-
+					
+						<div id="individual_name">
+						<c:if test="${k_aboutVO eq null && k_contactVO eq null}">${IndividualVO.email}<br>${IndividualVO.username}<br><br></c:if>
+						<c:if test="${k_aboutVO ne null || k_contactVO ne null}">
+						${k_aboutVO.compname_kr}<br>
+						${k_aboutVO.compname_en}<br>
+						${k_contactVO.address}
+						</c:if>
+						</div>
 					<ul id="page_move">
-						<!--페이지 이동-->
-						<li><a href="searchNews?code=${k_contactVO.companyCode}">News</a></li>
-						<li><a href="search_home?code=${k_contactVO.companyCode}">Home</a></li>
-						<li><a href="search_about?code=${k_contactVO.companyCode}">About</a></li>
-						<li><a href="search_product?code=${k_contactVO.companyCode}">Product</a></li>
-						<li class="on"><a
-							href="search_contact?code=${k_contactVO.companyCode}">Contact</a></li>
+						<li><a href="searchNews?userid=${IndividualVO.email}">Home</a></li>
+						<li><a href="check_about?userid=${IndividualVO.email}">About</a></li>
+						<li><a href="search_product?userid=${IndividualVO.email}">Product</a></li>
+						<li class="on"><a href="check_contact?userid=${IndividualVO.email}">Contact</a></li>
 					</ul>
+					
 				</div>
 				<div id="commu">
 					<div id="follow_btn">
-						<c:if test="${k_contactVO.flag eq true}">
+						<c:if test="${IndividualVO.flag eq true}">
 							<button id="follow" name="follow"
-								onclick="location.href='../follow/deleteCom?userid=${sessionScope.login}&followcode=${k_homeVO.companyCode}'">Following</button>
+								onclick="location.href='../follow/delete?userid=${sessionScope.login}&followid=${IndividualVO.email}'">Following</button>
 						</c:if>
-						<c:if test="${k_contactVO.flag eq false}">
+						<c:if test="${IndividualVO.flag eq false}">
 							<button id="follow" name="follow"
-								onclick="location.href='../follow/insertComFollow?userid=${sessionScope.login}&followcode=${k_homeVO.companyCode}'">Follow</button>
+								onclick="location.href='../follow/insertFollow?userid=${sessionScope.login}&followid=${IndividualVO.email}'">Follow</button>
 						</c:if>
 						<button type="submit" id="message" name="message">Message</button>
 					</div>
 				</div>
+				</c:forEach>
 				<div id="follow_num_home1">
 					<!--팔로워/팔로잉-->
 					<p>
-						회사 팔로워 <span id="follower_num_home"><a href="#"
-							onclick="myComfollower('${k_homeVO.companyCode}');">${followerComcount}</a></span>명
+						팔로워 <span id="follower_num_home"> <a href="#"
+							onclick="viewfollower('');">${followercount}</a>
+						</span>
+					</p>
+					<p>
+						팔로잉 <span id="following_num_home"> <a href="#"
+							onclick="viewfollowing('');">${followingcount}</a>
+						</span>
 					</p>
 				</div>
 
 			</div>
-
 			<!----기업 콘텐츠---->
 			<div id="contents_wrap">
-				<table>
+			<table>
 					<tr>
 						<td class="list">전화번호</td>
 						<td class="data"><span id="corporate_form">${k_contactVO.phonenumber}</span></td>
@@ -255,7 +250,7 @@
 					</tr>
 					<tr>
 						<td class="list">Email</td>
-						<td class="data"><span id="corporate_form">${k_contactVO.email}</span></td>
+						<td class="data"><span id="corporate_form">${k_contactVO.cemail}</span></td>
 					</tr>
 					<tr>
 						<td class="list">주소</td>
@@ -280,6 +275,7 @@
 					</tr>
 
 				</table>
+				
 			</div>
 		</div>
 
@@ -287,7 +283,7 @@
 		<!-- 		팔로우리스트  			-->
 		<%@ include file="../follow/followlist.jsp"%>
 
-		<!-- 		팔로우리스트  		-->
+		<!-- 		팔로우리스트  			-->
 	</section>
 </body>
 </html>

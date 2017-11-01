@@ -11,16 +11,6 @@ public interface FollowService {
 	
 	public List<FollowVO> listSearchCriteriaCompany(Map<String, String> map) throws Exception;
 	
-	
-
-	
-
-	
-
-	public int followercount(String id) throws Exception;
-
-	public int followingcount(String id) throws Exception;
-	
 	public int followerComcount(String code) throws Exception;
 
 	public int followingComcount(String id) throws Exception;
@@ -30,15 +20,6 @@ public interface FollowService {
 	public void insertComfollow(Map<String, String> map) throws Exception;
 
 	public void deleteCom(Map<String, String> map1) throws Exception;
-
-	public List<FollowVO> soloViewfollower(String email) throws Exception;
-
-	public List<FollowVO> soloViewfollowerScroll(Map<String, String> map) throws Exception;
-
-	public List<FollowVO> soloViewfollowing(String email)throws Exception;
-
-	public List<FollowVO> soloViewfollowingScroll(Map<String, String> map)throws Exception;
-
 	public List<FollowVO> myCompanyfolloer(String code) throws Exception;
 
 	public List<FollowVO> soloComfollowerScroll(Map<String, String> map) throws Exception;
@@ -67,6 +48,18 @@ public interface FollowService {
 	public void insertfollow(Map<String, String> map) throws Exception;
 	//언팔로우 하기
 	public void delete(Map<String, String> map1) throws Exception;
+	//팔로워 숫자
+	public int followercount(String id) throws Exception;
+	//팔로잉 숫자
+	public int followingcount(String id) throws Exception;
+	
+	public List<FollowVO> soloViewfollower(String email) throws Exception;
+
+	public List<FollowVO> soloViewfollowerScroll(Map<String, String> map) throws Exception;
+
+	public List<FollowVO> soloViewfollowing(String email)throws Exception;
+
+	public List<FollowVO> soloViewfollowingScroll(Map<String, String> map)throws Exception;
 
 
 }

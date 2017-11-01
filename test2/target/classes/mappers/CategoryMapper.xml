@@ -26,115 +26,52 @@
 	<sql id="search">
 		<if test="searchType != null">
 			<if test="searchType == 'add'.toString()">
-				AND concat(kc.address,kh.country) regexp #{keyword1}
+				AND kc.address LIKE CONCAT('%', #{keyword1}, '%')
+				
 			</if>
 		</if>
 	</sql>
 	<select id="listSearch" resultType="SearchVO">
 	<![CDATA[ 
-		SELECT kh.hid,kh.companyCode,
-		kh.hashtag, kh.companyimg, kh.pimage, kh.introduce,
-		kh.country,
-		ka.aid, ka.companyCode,
-		ka.compname_kr, ka.compname_en, ka.businessType,
-		ka.repname,
-		ka.businessname,ka.main_product, ka.establish, ka.employees,
-		ka.homepage,
-		ka.address,ka.phonenumber, ka.fax,ka.businessStatus,
+		SELECT one.username,one.email,one.profimg,
+		ka.compname_kr, ka.compname_en,
+		ka.businessType, ka.repname,
+		ka.businessname,ka.main_product,
+		ka.establish, ka.employees, ka.homepage, ka.businessStatus,
 		ka.take, ka.capital, ka.netincome,
-		ka.certificationStatus, ka.AboutUs,
-		kp.pid, kp.companyCode, kp.product,kp.usage,
-		kp.pcod,
-		kc.cid, kc.companyCode, kc.phonenumber, kc.fax, kc.email,
-		kc.address,
-		kc.organizationChart FROM
-		k_home kh JOIN k_about ka
-		ON kh.companyCode = ka.companyCode
+		ka.certificationStatus,ka.AboutUs, kp.product, kp.product_en,
+		kp.usage,
+		kp.pcod, kc.phonenumber, kc.fax,
+		kc.cemail, kc.address, kc.organizationChart
+		FROM
+		k_joinone one JOIN k_about ka
+		ON one.email = ka.userid
 		join k_product kp
-		on ka.companyCode = kp.companyCode
+		on ka.userid = kp.userid
 		join k_contact kc
-		on kp.companyCode = kc.companyCode
-		WHERE concat(ka.businessname) regexp  #{keyword}
+		on kp.userid = kc.userid
+		where  
+		ka.businessname LIKE CONCAT('%', #{keyword}, '%')
 		]]>
 		<include refid="search"></include>
 		<![CDATA[ 
-		GROUP by kh.companyCode desc
+		GROUP by one.one_id desc
 		limit #{pageStart},#{perPageNum} 
 		]]>
 	</select>
 	<select id="listSearchCount" resultType="int">
 		<![CDATA[ 
 		SELECT count(*) FROM
-		k_home kh JOIN k_about ka
-		ON kh.companyCode = ka.companyCode
+		k_joinone one JOIN k_about ka
+		ON one.email = ka.userid
 		join k_product kp
-		on ka.companyCode = kp.companyCode
+		on ka.userid = kp.userid
 		join k_contact kc
-		on kp.companyCode = kc.companyCode
-		where 
-		concat(kh.hid,kh.companyCode,
-		kh.hashtag, kh.companyimg, kh.pimage, kh.introduce,
-		kh.country,
-		ka.aid, ka.companyCode,
-		ka.compname_kr, ka.compname_en, ka.businessType,
-		ka.repname,
-		ka.businessname,ka.main_product, ka.establish, ka.employees,
-		ka.homepage,
-		ka.address,ka.phonenumber, ka.fax,ka.businessStatus,
-		ka.take, ka.capital, ka.netincome,
-		ka.certificationStatus, ka.AboutUs,
-		kp.pid, kp.companyCode, kp.product,kp.usage,
-		kp.pcod,
-		kc.cid, kc.companyCode, kc.phonenumber, kc.fax, kc.email,
-		kc.address,
-		kc.organizationChart) regexp #{keyword}
+		on kp.userid = kc.userid
+		where  
+		ka.businessname LIKE CONCAT('%', #{keyword}, '%')
 		]]>
 		<include refid="search"></include>
 	</select>
-	<select id="search_home" resultType="K_homeVO">
-		SELECT
-		`hid`, `companyCode`,
-		`hashtag`, `companyimg`,`pimage`, `introduce`, `country`
-		FROM
-		`k_home`
-		WHERE
-		`companyCode`=#{code};
-	</select>
-	<select id="search_about" resultType="K_aboutVO">
-		SELECT
-		`aid`, `companyCode`,
-		`compname_kr`, `compname_en`, `businessType`, `repname`,
-		`businessname`,`main_product`, `establish`, `employees`, `homepage`,
-		`address`,
-		`phonenumber`, `fax`,`businessStatus`, `take`, `capital`,
-		`netincome`,
-		`certificationStatus`, `AboutUs`
-		FROM
-		`k_about`
-		WHERE
-		`companyCode`=#{code};
-	</select>
-	<select id="search_product" resultType="K_productVO">
-		SELECT
-		`pid`,`companyCode`,
-		`image`,
-		`product`,`product_en`,
-		`usage`,
-		`pcod`,
-		`pinfo`
-		FROM
-		`k_product`
-		WHERE
-		`companyCode`=#{code};
-	</select>
-	<select id="search_contact" resultType="K_contactVO">
-		SELECT
-		`cid`, `companyCode`,
-		`phonenumber`, `fax`, `email`, `address`,
-		`organizationChart`
-		FROM
-		`k_contact`
-		WHERE
-		`companyCode`=#{code};
-	</select>
+
 </mapper>

@@ -100,9 +100,8 @@
 						}); */
 					});
 	function goproduct(keyword) {
-
 		var keyword = keyword;
-		location.href = "../search/check_product?code=" + keyword;
+		location.href = "../search/check_product?userid=" + keyword;
 	}
 </script>
 <script type="text/javascript">

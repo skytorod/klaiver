@@ -101,7 +101,7 @@
 					});
 	function gocompany(userid) {
 		var id = userid;
-		window.open("./searchNews?userid=" + id, "_blank");
+		location.href = "./searchNews?userid=" + id;
 	}
 	function gomycompany(userid) {
 
@@ -116,7 +116,7 @@
 	function gosolo(keyword) {
 
 		var keyword = keyword;
-		location.href = "../cboard/news?userid=" + keyword;
+		location.href = "../search/searchNews?userid=" + keyword;
 	}
 	function goproduct(keyword) {
 		var keyword = keyword;

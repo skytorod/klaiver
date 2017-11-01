@@ -26,17 +26,7 @@ public class FollowServiceImpl implements FollowService {
 
 
 	
-	@Override
-	public int followercount(String id) throws Exception {
-		// TODO Auto-generated method stub
-		return dao.followercount(id);
-	}
-
-	@Override
-	public int followingcount(String id) throws Exception {
-		// TODO Auto-generated method stub
-		return dao.followingcount(id);
-	}
+	
 	@Override
 	public int followerComcount(String code) throws Exception {
 		// TODO Auto-generated method stub
@@ -65,29 +55,7 @@ public class FollowServiceImpl implements FollowService {
 		dao.deleteCom(map1);
 	}
 
-	@Override
-	public List<FollowVO> soloViewfollower(String email) throws Exception {
-		// TODO Auto-generated method stub
-		return dao.soloViewfollower(email);
-	}
-
-	@Override
-	public List<FollowVO> soloViewfollowerScroll(Map<String, String> map) throws Exception {
-		// TODO Auto-generated method stub
-		return dao.soloViewfollowerScroll(map);
-	}
-
-	@Override
-	public List<FollowVO> soloViewfollowing(String email) throws Exception {
-		// TODO Auto-generated method stub
-		return dao.soloViewfollowing(email);
-	}
-
-	@Override
-	public List<FollowVO> soloViewfollowingScroll(Map<String, String> map) throws Exception {
-		// TODO Auto-generated method stub
-		return dao.soloViewfollowingScroll(map);
-	}
+	
 
 	@Override
 	public List<FollowVO> myCompanyfolloer(String code) throws Exception {
@@ -169,5 +137,38 @@ public class FollowServiceImpl implements FollowService {
 		// TODO Auto-generated method stub
 		dao.delete(map1);
 	}
+	@Override
+	public int followercount(String id) throws Exception {
+		// TODO Auto-generated method stub
+		return dao.followercount(id);
+	}
 
+	@Override
+	public int followingcount(String id) throws Exception {
+		// TODO Auto-generated method stub
+		return dao.followingcount(id);
+	}
+	@Override
+	public List<FollowVO> soloViewfollower(String email) throws Exception {
+		// TODO Auto-generated method stub
+		return dao.soloViewfollower(email);
+	}
+
+	@Override
+	public List<FollowVO> soloViewfollowerScroll(Map<String, String> map) throws Exception {
+		// TODO Auto-generated method stub
+		return dao.soloViewfollowerScroll(map);
+	}
+
+	@Override
+	public List<FollowVO> soloViewfollowing(String email) throws Exception {
+		// TODO Auto-generated method stub
+		return dao.soloViewfollowing(email);
+	}
+
+	@Override
+	public List<FollowVO> soloViewfollowingScroll(Map<String, String> map) throws Exception {
+		// TODO Auto-generated method stub
+		return dao.soloViewfollowingScroll(map);
+	}
 }

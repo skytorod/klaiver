@@ -27,15 +27,7 @@
 	</select>
 	
 	
-	<select id="followercount" resultType="int">
-		SELECT count(followid)
-		FROM
-		k_follow where followid=#{id};
-	</select>
-	<select id="followingcount" resultType="int">
-		SELECT count(myid) FROM
-		k_follow where myid=#{id};
-	</select>
+	
 	<select id="followerComcount" resultType="int">
 		SELECT
 		count(fcmyid) FROM
@@ -64,80 +56,7 @@
 		delete from k_followcompany
 		where followcode=#{followcode} and fcmyid=#{userid};
 	</delete>
-	<select id="soloViewfollower" resultType="FollowVO">
-		SELECT
-		kf.fid, kf.myid,
-		kf.followid,jo.first, jo.last,two.company,three.profimg
-		FROM
-		k_follow kf
-		join k_joinone jo
-		on
-		kf.myid= jo.email
-		join k_jointwo two
-		on
-		jo.one_id =
-		two.one_id
-		join k_jointhree three
-		on two.two_id = three.two_id
-		where kf.followid= #{email}
-		group by kf.fid asc
-		limit 0,12;
-	</select>
-	<select id="soloViewfollowerScroll" resultType="FollowVO">
-		SELECT
-		kf.fid,
-		kf.myid, kf.followid,jo.first, jo.last,two.company,three.profimg
-		FROM
-		k_follow kf join k_joinone jo
-		on
-		kf.myid= jo.email
-		join k_jointwo two
-		on
-		jo.one_id = two.one_id
-		join k_jointhree three
-		on two.two_id =
-		three.two_id
-		where kf.followid= #{email} and kf.fid > #{fid}
-		group by kf.fid asc
-		limit 0,4;
-	</select>
-	<select id="soloViewfollowing" resultType="FollowVO">
-		SELECT
-		kf.fid, kf.myid,
-		kf.followid,jo.first, jo.last,two.company,three.profimg
-		FROM
-		k_follow kf
-		join k_joinone jo
-		on
-		kf.followid= jo.email
-		join k_jointwo two
-		on
-		jo.one_id
-		= two.one_id
-		join k_jointhree three
-		on two.two_id = three.two_id
-		where kf.myid=#{email}
-		group by kf.fid asc
-		limit 0,12;
-	</select>
-	<select id="soloViewfollowingScroll" resultType="FollowVO">
-		SELECT
-		kf.fid,
-		kf.myid, kf.followid,jo.first, jo.last,two.company,three.profimg
-		FROM
-		k_follow kf join k_joinone jo
-		on
-		kf.followid= jo.email
-		join k_jointwo two
-		on
-		jo.one_id = two.one_id
-		join k_jointhree three
-		on two.two_id =
-		three.two_id
-		where kf.myid=#{email} and kf.fid > #{fid}
-		group by kf.fid asc
-		limit 0,4;
-	</select>
+	
 	<select id="myCompanyfolloer" resultType="FollowVO">
 		SELECT
 		kfc.fcid,
@@ -348,4 +267,57 @@
 		delete from k_follow where
 		followid=#{followid} and myid=#{userid};
 	</delete>
+	<select id="followercount" resultType="int">
+		SELECT count(followid)
+		FROM
+		k_follow where followid=#{id};
+	</select>
+	<select id="followingcount" resultType="int">
+		SELECT count(myid) FROM
+		k_follow where myid=#{id};
+	</select>
+	<select id="soloViewfollower" resultType="FollowVO">
+		SELECT
+		kf.fid, kf.myid,
+		kf.followid,jo.email,jo.username,jo.profimg
+		FROM
+		k_follow kf join k_joinone jo
+		on kf.myid = jo.email
+		where kf.followid= #{email}
+		group by kf.fid asc
+		limit 0,12;
+	</select>
+	<select id="soloViewfollowerScroll" resultType="FollowVO">
+		SELECT
+		kf.fid, kf.myid,
+		kf.followid,jo.email,jo.username,jo.profimg
+		FROM
+		k_follow kf join k_joinone jo
+		on kf.myid = jo.email
+		where kf.followid= #{email} and kf.fid > #{fid}
+		group by kf.fid asc
+		limit 0,4;
+	</select>
+	<select id="soloViewfollowing" resultType="FollowVO">
+		SELECT
+		kf.fid, kf.myid,
+		kf.followid,jo.email,jo.username,jo.profimg
+		FROM
+		k_follow kf join k_joinone jo
+		on kf.followid = jo.email
+		where kf.myid=#{email}
+		group by kf.fid asc
+		limit 0,12;
+	</select>
+	<select id="soloViewfollowingScroll" resultType="FollowVO">
+		SELECT
+		kf.fid, kf.myid,
+		kf.followid,jo.email,jo.username,jo.profimg
+		FROM
+		k_follow kf join k_joinone jo
+		on kf.followid = jo.email
+		where kf.myid=#{email} and kf.fid > #{fid}
+		group by kf.fid asc
+		limit 0,4;
+	</select>
 </mapper>

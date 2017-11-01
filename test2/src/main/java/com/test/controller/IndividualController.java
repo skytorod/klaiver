@@ -484,7 +484,7 @@ public class IndividualController {
 
 	}
 
-	//////////////////////////////////////// 개인페이지 팔로워보기////////////////
+	/////////////////////////////////////// 개인페이지 팔로워보기////////////////
 	@RequestMapping(value = "/soloViewfollower", method = RequestMethod.GET)
 	public void soloViewfollower(String email, HttpServletRequest request, Model model) throws Exception {
 		String id = (String) request.getSession().getAttribute("login");

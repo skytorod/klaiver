@@ -39,7 +39,7 @@ var jb = jQuery.noConflict();
 <script>
     function viewfollower(email){
     	var email = email;
-     	var popUrl = "../member/soloViewfollower?email="+email;
+     	var popUrl = "../cboard/soloViewfollower?email="+email;
  		var windowW = 400;  // 창의 가로 길이
         var windowH = 400;  // 창의 세로 길이
         var left = Math.ceil((window.screen.width - windowW)/2);
@@ -48,7 +48,7 @@ var jb = jQuery.noConflict();
     }
     function viewfollowing(email){
     	var email = email;
-     	var popUrl = "../member/soloViewfollowing?email="+email;
+     	var popUrl = "../cboard/soloViewfollowing?email="+email;
  		var windowW = 400;  // 창의 가로 길이
         var windowH = 400;  // 창의 세로 길이
         var left = Math.ceil((window.screen.width - windowW)/2);
@@ -301,9 +301,13 @@ $(document).ready(function(){
 				<div id="company_info">
 					<!--기업정보-->
 					<c:forEach items="${IndividualVO}" var="IndividualVO">
-						<div id="individual_name">${k_aboutVO.compname_kr}<br>
+						<div id="individual_name">
+						<c:if test="${k_aboutVO eq null && k_contactVO eq null}">${IndividualVO.email}<br>${IndividualVO.username}<br></c:if>
+						<c:if test="${k_aboutVO ne null || k_contactVO ne null}">
+						${k_aboutVO.compname_kr}<br>
 						${k_aboutVO.compname_en}<br>
 						${k_contactVO.address}
+						</c:if>
 						<a href="../cboard/update_home?userid=${sessionScope.login}"><img
 								src="../resources/images/set.png" /></a>
 						</div>
@@ -322,16 +326,18 @@ $(document).ready(function(){
 				</div>
 				<div id="follow_num_home1">
 					<!--팔로워/팔로잉-->
+					<c:forEach items="${IndividualVO}" var="IndividualVO">
 					<p>
 						팔로워 <span id="follower_num_home"> <a href="#"
-							onclick="viewfollower('');">${followercount}</a>
+							onclick="viewfollower('${IndividualVO.email}');">${followercount}</a>
 						</span>
 					</p>
 					<p>
 						팔로잉 <span id="following_num_home"> <a href="#"
-							onclick="viewfollowing('');">${followingcount}</a>
+							onclick="viewfollowing('${IndividualVO.email}');">${followingcount}</a>
 						</span>
 					</p>
+					</c:forEach>
 				</div>
 
 			</div>

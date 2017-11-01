@@ -28,17 +28,7 @@ public class FollowDAOImpl implements FollowDAO {
 
 	
 
-	@Override
-	public int followercount(String id) throws Exception {
-		// TODO Auto-generated method stub
-		return sqlSession.selectOne(namespace+".followercount",id);
-	}
-
-	@Override
-	public int followingcount(String id) throws Exception {
-		// TODO Auto-generated method stub
-		return sqlSession.selectOne(namespace+".followingcount",id);
-	}
+	
 	@Override
 	public int followerComcount(String code) throws Exception {
 		// TODO Auto-generated method stub
@@ -68,28 +58,7 @@ public class FollowDAOImpl implements FollowDAO {
 		sqlSession.delete(namespace+".deleteCom",map1);
 	}
 
-	@Override
-	public List<FollowVO> soloViewfollower(String email) throws Exception {
-		// TODO Auto-generated method stub
-		return sqlSession.selectList(namespace+".soloViewfollower",email);
-	}
-
-	@Override
-	public List<FollowVO> soloViewfollowerScroll(Map<String, String> map) throws Exception {
-		// TODO Auto-generated method stub
-		return sqlSession.selectList(namespace+".soloViewfollowerScroll",map);
-	}
-
-	@Override
-	public List<FollowVO> soloViewfollowing(String email) throws Exception {
-		// TODO Auto-generated method stub
-		return sqlSession.selectList(namespace+".soloViewfollowing",email);
-	}
-
-	@Override
-	public List<FollowVO> soloViewfollowingScroll(Map<String, String> map) throws Exception {
-		return sqlSession.selectList(namespace+".soloViewfollowingScroll",map);
-	}
+	
 
 	@Override
 	public List<FollowVO> myCompanyfolloer(String code) throws Exception {
@@ -171,5 +140,38 @@ public class FollowDAOImpl implements FollowDAO {
 	public void delete(Map<String, String> map1) throws Exception {
 		// TODO Auto-generated method stub
 		sqlSession.delete(namespace+".delete",map1);
+	}
+	@Override
+	public int followercount(String id) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne(namespace+".followercount",id);
+	}
+
+	@Override
+	public int followingcount(String id) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne(namespace+".followingcount",id);
+	}
+	@Override
+	public List<FollowVO> soloViewfollower(String email) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList(namespace+".soloViewfollower",email);
+	}
+
+	@Override
+	public List<FollowVO> soloViewfollowerScroll(Map<String, String> map) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList(namespace+".soloViewfollowerScroll",map);
+	}
+
+	@Override
+	public List<FollowVO> soloViewfollowing(String email) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList(namespace+".soloViewfollowing",email);
+	}
+
+	@Override
+	public List<FollowVO> soloViewfollowingScroll(Map<String, String> map) throws Exception {
+		return sqlSession.selectList(namespace+".soloViewfollowingScroll",map);
 	}
 }
